@@ -52,7 +52,7 @@ export interface Cosmetic {
 	id: string;
 	name: string;
 	description: string;
-	customExclusiveCallout: string | undefined;
+	customExclusiveCallout?: string;
 	type: CosmeticValues;
 	rarity: CosmeticValues;
 	series: {
@@ -82,13 +82,13 @@ export interface Cosmetic {
 			image: string;
 		}[];
 	}[] | null;
-	builtInEmoteIds: string[] | undefined;
+	builtInEmoteIds?: string[];
 	searchTags: string[] | null;
 	gameplayTags: string[] | null;
 	metaTags: string[] | null;
 	showcaseVideo: string | null;
 	dynamicPakId: string | null;
-	itemPreviewHeroPath: string | undefined;
+	itemPreviewHeroPath?: string;
 	displayAssetPath: string | null;
 	definitionPath: string | null;
 	path: string;
