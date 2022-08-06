@@ -402,7 +402,7 @@ export interface PlatformStats {
 	ltm: BaseBRStats;
 }
 
-export interface BRStats {
+export interface Stats {
 	account: {
 		id: string;
 		name: string;
@@ -434,7 +434,7 @@ export interface IdStatsOptions extends BaseStatOptions {
 	id: string;
 }
 
-export type AnyData = AES | Banner[] | BannerColor[] | NewCosmetics | Cosmetic | Cosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | CombinedShop | Shop | BRStats;
+export type AnyData = AES | Banner[] | BannerColor[] | NewCosmetics | Cosmetic | Cosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | CombinedShop | Shop | Stats;
 
 export interface Raw<Data extends AnyData> {
 	status: 200;

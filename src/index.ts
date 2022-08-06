@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import { Language, ClientOptions, RawFortniteAPIError, AES, Banner, BannerColor, Cosmetic, NewCosmetics, AllCosmeticsOptions, CosmeticSearchOptions, CreatorCode, Map, News, AllNews, NewsOptions, Playlist, PlaylistOptions, CombinedShop, Shop, ShopOptions, BRStats, BaseStatOptions, NameStatsOptions, IdStatsOptions, Raw, AnyEndpointOptions } from './types.js';
+import { AES, AllCosmeticsOptions, AllNews, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, Raw, RawFortniteAPIError } from './types.js';
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
 
@@ -174,7 +174,7 @@ export class Client {
 			route = this.route(`${Endpoints.BRStatsByAccountId}${options.id}`, params);
 		}
 
-		const res = await this.fetch(route, true) as Raw<BRStats> | RawFortniteAPIError;
+		const res = await this.fetch(route, true) as Raw<Stats> | RawFortniteAPIError;
 		if (res.status !== 200) throw new FortniteAPIError(res, route);
 		return res.data;
 	}
