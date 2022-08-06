@@ -161,7 +161,7 @@ export class Client {
 		const hasId = 'id' in options;
 		if (!hasName && !hasId) throw new TypeError('Neither the "name" nor the "id" property of the Client#stats() argument were provided');
 		else if (hasName && hasId) throw new TypeError('The "name" and "id" properties of the Client#stats() argument are mutually exclusive');
-		else if (hasId && 'accountType' in options) throw new TypeError('The "name" and "accountType" properties of the Client#stats() argument are mutually exclusive');
+		else if (hasId && 'accountType' in options) throw new TypeError('The "id" and "accountType" properties of the Client#stats() argument are mutually exclusive');
 
 		let route: string;
 		if (hasName) {
