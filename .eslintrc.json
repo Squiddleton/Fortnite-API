@@ -6,7 +6,8 @@
     "project": "tsconfig.json"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "eslint-plugin-tsdoc"
   ],
   "extends": [
     "eslint:recommended",
@@ -54,6 +55,7 @@
     "@typescript-eslint/space-infix-ops": "error",
     "space-unary-ops": "error",
     "spaced-comment": "error",
+    "tsdoc/syntax": "error",
     "yoda": "error"
   },
   "ignorePatterns": [
