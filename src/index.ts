@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllCosmeticsOptions, AllNews, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, Raw, RawFortniteAPIError, AnyData } from './types.js';
+import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError } from './types.js';
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
 
@@ -23,7 +23,7 @@ export class Client {
 		this.language = options.language ?? 'en';
 	}
 
-	private route(endpoint: string, params: AnyEndpointOptions | { keyFormat: 'hex' | 'base64' } = {}) {
+	private route(endpoint: string, params: AnyEndpointOptions | StringRecord = {}) {
 		return Object.keys(params).length === 0
 			? endpoint
 			: `${endpoint}?${Object.entries(params).map(([key, value]) => Array.isArray(value) ? value.map(v => `${key}=${v}`).join('&') : `${key}=${value}`).join('&')}`;
