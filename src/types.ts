@@ -2,6 +2,10 @@ export type DateString = string;
 
 export type UnixTimestamp = number;
 
+export type StringRecord = {
+	[key: string]: string;
+};
+
 export type Language = 'ar' | 'de' | 'en' | 'es' | 'es-419' | 'fr' | 'it' | 'ja' | 'ko' | 'pl' | 'pt-BR' | 'ru' | 'tr' | 'zh-CN' | 'zh-Hant';
 
 export interface LanguageSupportingOption {
@@ -71,7 +75,7 @@ export interface Cosmetic {
 		smallIcon: string | null;
 		icon: string;
 		featured: string | null;
-		other: { [key: string]: string } | null;
+		other: StringRecord | null;
 	};
 	variants: {
 		channel: string;
@@ -265,10 +269,14 @@ export interface NewDisplayAsset {
 	cosmeticId: string | null;
 	materialInstances: {
 		id: string;
-		images: Record<string, string>;
-		colors: Record<string, string>;
-		scalings: Record<string, number>;
-		flags: Record<string, boolean>;
+		images: StringRecord;
+		colors: StringRecord;
+		scalings: {
+			[scaling: string]: number;
+		};
+		flags: {
+			[flag: string]: boolean;
+		};
 	}[];
 }
 
