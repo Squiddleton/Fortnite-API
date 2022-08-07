@@ -14,7 +14,7 @@ Install this scoped package by running the following command in your terminal:
 npm install @squiddleton/fortnite-api
 ```
 
-The package exports three main objects: the `Client` constructor with methods that fetch Fortnite-API, the `Endpoints` enum which contains all of the endpoints used in the package, and the `FortniteAPIError` class which represents errors received from Fortnite-API. All Client methods return [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which must be resolved in order to use the returned structure. Methods, their arguments, and returned structures are documented via the declaration files ending in .d.ts in the transpiled code. This library also adheres to [semantic versioning](https://semver.org/), so breaking changes post-1.0.0 will only be introduced in major version increments.
+The package exports three main objects: the `Client` constructor with methods that fetch Fortnite-API, the `Endpoints` enum which contains all of the endpoints used in the package, and the `FortniteAPIError` class which represents errors received from Fortnite-API. All methods return [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which must be resolved in order to use the returned structure. Functions, their arguments, and returned structures are documented via the declaration files ending in .d.ts in the transpiled code. This library also adheres to [semantic versioning](https://semver.org/), so breaking changes post-1.0.0 will only be introduced in major version increments.
 
 ```javascript
 const { Client, Endpionts } = require('@squiddleton/fortnite-api'); // ESM syntax is also supported
