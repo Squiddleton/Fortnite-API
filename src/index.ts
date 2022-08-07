@@ -4,7 +4,7 @@ import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Ba
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
 
-class FortniteAPIError extends Error {
+export class FortniteAPIError extends Error {
 	code: number;
 	route: string;
 	constructor(error: RawFortniteAPIError, route: string) {
