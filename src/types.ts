@@ -115,7 +115,7 @@ export interface AllCosmeticsOptions extends LanguageSupportingOption {
 
 export type CosmeticSearchParametersType = 'single' | 'multiple';
 
-export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType = CosmeticSearchParametersType> extends LanguageSupportingOption {
+export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType> extends LanguageSupportingOption {
 	searchLanguage?: string;
 	matchMethod?: 'full' | 'contains' | 'starts' | 'ends';
 	id?: T extends 'single' ? string : string[];
@@ -449,4 +449,4 @@ export interface Raw<Data extends AnyData> {
 	data: Data;
 }
 
-export type AnyEndpointOptions = AllCosmeticsOptions | CosmeticSearchOptions | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | NameStatsOptions | IdStatsOptions;
+export type AnyEndpointOptions = AllCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | NameStatsOptions | IdStatsOptions;
