@@ -23,7 +23,10 @@ export class Client {
 		this.language = options.language ?? 'en';
 	}
 
-	private route(endpoint: string, params: AnyEndpointOptions | StringRecord = {}) {
+	private route(endpoint: string, params: AnyEndpointOptions | StringRecord = {}, hasArray = false) {
+		if (!hasArray) {
+			return `${endpoint}?${new URLSearchParams(Object.entries(params))}`;
+		}
 		return Object.keys(params).length === 0
 			? endpoint
 			: `${endpoint}?${Object.entries(params).map(([key, value]) => Array.isArray(value) ? value.map(v => `${key}=${v}`).join('&') : `${key}=${value}`).join('&')}`;
@@ -52,25 +55,25 @@ export class Client {
 	listCosmetics(options: AllCosmeticsOptions & { combined: true }): Promise<NewCosmetics>;
 	listCosmetics(options?: AllCosmeticsOptions): Promise<Cosmetic[]>;
 	async listCosmetics(options: AllCosmeticsOptions = {}) {
-		if (options.new) {
-			return this.fetch<NewCosmetics>(this.route(Endpoints.NewCosmetics, { language: options.language ?? this.language }));
-		}
-		else {
-			return this.fetch<Cosmetic[]>(this.route(Endpoints.CosmeticsList, { language: options.language ?? this.language }));
-		}
+		const params = { language: options.language ?? this.language };
+		return options.new
+			? this.fetch<NewCosmetics>(this.route(Endpoints.NewCosmetics, params))
+			: this.fetch<Cosmetic[]>(this.route(Endpoints.CosmeticsList, params));
 	}
 	async findCosmetic(options: CosmeticSearchOptions<'single'>) {
+		const language = options.language ?? this.language;
 		return this.fetch<Cosmetic>(
 			options.id === undefined
-				? this.route(Endpoints.CosmeticsSearch, options)
-				: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language: options.language ?? this.language })
+				? this.route(Endpoints.CosmeticsSearch, { ...options, language })
+				: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language })
 		);
 	}
 	async filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
+		const language = options.language ?? this.language;
 		return this.fetch<Cosmetic[]>(
 			options.id === undefined
-				? this.route(Endpoints.CosmeticsSearchAll, options)
-				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language: options.language ?? this.language })
+				? this.route(Endpoints.CosmeticsSearchAll, { ...options, language })
+				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language }, true)
 		);
 	}
 
@@ -81,37 +84,32 @@ export class Client {
 	news(options: NewsOptions & { mode: 'br' | 'stw' | 'creative' }): Promise<News>;
 	news(options?: NewsOptions): Promise<AllNews>;
 	async news(options: NewsOptions = {}) {
-		if (options.mode === undefined) {
-			return this.fetch<AllNews>(this.route(Endpoints.News, { language: options.language ?? this.language }));
-		}
-		else {
-			const modeToEndpoint = {
+		const params = { language: options.language ?? this.language };
+		return options.mode === undefined
+			? this.fetch<AllNews>(this.route(Endpoints.News, params))
+			: this.fetch<News>(this.route({
 				br: Endpoints.BRNews,
 				stw: Endpoints.STWNews,
 				creative: Endpoints.CreativeNews
-			};
-			const endpoint = modeToEndpoint[options.mode];
-			return this.fetch<News>(this.route(endpoint, { language: options.language ?? this.language }));
-		}
+			}[options.mode], params));
 	}
 
 	playlists(options: PlaylistOptions & { id: string }): Promise<Playlist>;
 	playlists(options?: PlaylistOptions): Promise<Playlist[]>;
 	async playlists(options: PlaylistOptions = {}) {
-		if (options.id === undefined) {
-			return this.fetch<Playlist[]>(this.route(Endpoints.Playlists, { language: options.language ?? this.language }));
-		}
-		else {
-			return this.fetch<Playlist>(this.route(Endpoints.PlaylistById.replace('{playlist-id}', options.id), { language: options.language ?? this.language }));
-		}
+		const params = { language: options.language ?? this.language };
+		return options.id === undefined
+			? this.fetch<Playlist[]>(this.route(Endpoints.Playlists, params))
+			: this.fetch<Playlist>(this.route(Endpoints.PlaylistById.replace('{playlist-id}', options.id), params));
 	}
 
 	shop(options: ShopOptions & { combined: true }): Promise<CombinedShop>;
 	shop(options?: ShopOptions): Promise<Shop>;
 	async shop(options: ShopOptions = {}) {
-		return (options.combined)
-			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language }))
-			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language }));
+		const params = { language: options.language ?? this.language };
+		return options.combined
+			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params))
+			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params));
 	}
 
 	async stats(options: NameStatsOptions | IdStatsOptions) {
