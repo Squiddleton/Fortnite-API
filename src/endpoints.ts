@@ -6,7 +6,7 @@ enum Endpoints {
 
 	CosmeticsList = 'https://fortnite-api.com/v2/cosmetics/br',
 	NewCosmetics = 'https://fortnite-api.com/v2/cosmetics/br/new',
-	CosmeticsById = 'https://fortnite-api.com/v2/cosmetics/br/',
+	CosmeticsById = 'https://fortnite-api.com/v2/cosmetics/br/{cosmetic-id}',
 	CosmeticsSearch = 'https://fortnite-api.com/v2/cosmetics/br/search',
 	CosmeticsSearchAll = 'https://fortnite-api.com/v2/cosmetics/br/search/all',
 	CosmeticsSearchByIds = 'https://fortnite-api.com/v2/cosmetics/br/search/ids',
@@ -21,13 +21,13 @@ enum Endpoints {
 	CreativeNews = 'https://fortnite-api.com/v2/news/creative',
 
 	Playlists = 'https://fortnite-api.com/v1/playlists',
-	PlaylistById = 'https://fortnite-api.com/v1/playlists/',
+	PlaylistById = 'https://fortnite-api.com/v1/playlists/{playlist-id}',
 
 	BRShop = 'https://fortnite-api.com/v2/shop/br',
 	BRShopCombined = 'https://fortnite-api.com/v2/shop/br/combined',
 
 	BRStats = 'https://fortnite-api.com/v2/stats/br/v2',
-	BRStatsByAccountId = 'https://fortnite-api.com/v2/stats/br/v2/'
+	BRStatsByAccountId = 'https://fortnite-api.com/v2/stats/br/v2/{accountId}'
 }
 
 export default Endpoints;

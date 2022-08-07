@@ -76,7 +76,7 @@ export class Client {
 	async findCosmetic(options: CosmeticSearchOptions<'single'>) {
 		const route = options.id === undefined
 			? this.route(Endpoints.CosmeticsSearch, options)
-			: this.route(`${Endpoints.CosmeticsById}${options.id}`, { language: options.language ?? this.language });
+			: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language: options.language ?? this.language });
 		const res = await this.fetch(route) as Raw<Cosmetic> | RawFortniteAPIError;
 		if (res.status !== 200) throw new FortniteAPIError(res, route);
 		return res.data;
@@ -130,7 +130,7 @@ export class Client {
 			return res.data;
 		}
 		else {
-			const route = this.route(`${Endpoints.PlaylistById}${options.id}`, { language: options.language ?? this.language });
+			const route = this.route(Endpoints.PlaylistById.replace('{playlist-id}', options.id), { language: options.language ?? this.language });
 			const res = await this.fetch(route) as Raw<Playlist> | RawFortniteAPIError;
 			if (res.status !== 200) throw new FortniteAPIError(res, route);
 			return res.data;
@@ -171,7 +171,7 @@ export class Client {
 			const params: BaseStatOptions = {};
 			if (options.timeWindow !== undefined) params.timeWindow = options.timeWindow;
 			if (options.image !== undefined) params.image = options.image;
-			route = this.route(`${Endpoints.BRStatsByAccountId}${options.id}`, params);
+			route = this.route(Endpoints.BRStatsByAccountId.replace('{accountId}', options.id), params);
 		}
 
 		const res = await this.fetch(route, true) as Raw<Stats> | RawFortniteAPIError;
