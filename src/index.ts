@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllCosmeticsOptions, AllNews, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, Raw, RawFortniteAPIError } from './types.js';
+import type { AES, AllCosmeticsOptions, AllNews, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, Raw, RawFortniteAPIError, AnyData } from './types.js';
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
 
@@ -28,83 +28,61 @@ export class Client {
 			? endpoint
 			: `${endpoint}?${Object.entries(params).map(([key, value]) => Array.isArray(value) ? value.map(v => `${key}=${v}`).join('&') : `${key}=${value}`).join('&')}`;
 	}
-	private async fetch(route: string, authorization = false) {
-		const res = await fetch(route, authorization && this.key !== null ? { headers: { Authorization: this.key } } : undefined);
-		return res.json() as unknown;
+	private async fetch<Data extends AnyData>(route: string, authorization = false) {
+		const res = await fetch(route, authorization && this.key !== null ? { headers: { Authorization: this.key } } : undefined).then(r => r.json()) as Raw<Data> | RawFortniteAPIError;
+		if (res.status !== 200) throw new FortniteAPIError(res, route);
+		return res.data;
 	}
 
 	async aes(keyFormat: 'hex' | 'base64' = 'hex') {
-		const route = this.route(Endpoints.AES, { keyFormat });
-		const res = await this.fetch(route) as Raw<AES> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<AES>(this.route(Endpoints.AES, { keyFormat }));
 	}
 
 	async banners(language: Language = this.language) {
-		const route = this.route(Endpoints.Banners, { language });
-		const res = await this.fetch(route) as Raw<Banner[]> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<Banner[]>(this.route(Endpoints.Banners, { language }));
 	}
 	async bannerColors() {
-		return (await this.fetch(this.route(Endpoints.BannerColors)) as Raw<BannerColor[]>).data;
+		return this.fetch<BannerColor[]>(this.route(Endpoints.BannerColors));
 	}
 
 	async creatorCode(name: string) {
-		const route = this.route(Endpoints.CreatorCode, { name });
-		const res = await this.fetch(route) as Raw<CreatorCode> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<CreatorCode>(this.route(Endpoints.CreatorCode, { name }));
 	}
 
 	listCosmetics(options: AllCosmeticsOptions & { combined: true }): Promise<NewCosmetics>;
 	listCosmetics(options?: AllCosmeticsOptions): Promise<Cosmetic[]>;
 	async listCosmetics(options: AllCosmeticsOptions = {}) {
 		if (options.new) {
-			const route = this.route(Endpoints.NewCosmetics, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<NewCosmetics> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<NewCosmetics>(this.route(Endpoints.NewCosmetics, { language: options.language ?? this.language }));
 		}
 		else {
-			const route = this.route(Endpoints.CosmeticsList, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<Cosmetic[]> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<Cosmetic[]>(this.route(Endpoints.CosmeticsList, { language: options.language ?? this.language }));
 		}
 	}
 	async findCosmetic(options: CosmeticSearchOptions<'single'>) {
-		const route = options.id === undefined
-			? this.route(Endpoints.CosmeticsSearch, options)
-			: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language: options.language ?? this.language });
-		const res = await this.fetch(route) as Raw<Cosmetic> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<Cosmetic>(
+			options.id === undefined
+				? this.route(Endpoints.CosmeticsSearch, options)
+				: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language: options.language ?? this.language })
+		);
 	}
 	async filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
-		const route = options.id === undefined
-			? this.route(Endpoints.CosmeticsSearchAll, options)
-			: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language: options.language ?? this.language });
-		const res = await this.fetch(route) as Raw<Cosmetic[]> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<Cosmetic[]>(
+			options.id === undefined
+				? this.route(Endpoints.CosmeticsSearchAll, options)
+				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language: options.language ?? this.language })
+		);
 	}
 
 	async map(language: Language = this.language) {
-		const route = this.route(Endpoints.Map, { language });
-		const res = await this.fetch(route) as Raw<Map> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<Map>(this.route(Endpoints.Map, { language }));
 	}
 
 	news(options: NewsOptions & { mode: 'br' | 'stw' | 'creative' }): Promise<News>;
 	news(options?: NewsOptions): Promise<AllNews>;
 	async news(options: NewsOptions = {}) {
 		if (options.mode === undefined) {
-			const route = this.route(Endpoints.News, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<AllNews> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<AllNews>(this.route(Endpoints.News, { language: options.language ?? this.language }));
 		}
 		else {
 			const modeToEndpoint = {
@@ -113,10 +91,7 @@ export class Client {
 				creative: Endpoints.CreativeNews
 			};
 			const endpoint = modeToEndpoint[options.mode];
-			const route = this.route(endpoint, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<News> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<News>(this.route(endpoint, { language: options.language ?? this.language }));
 		}
 	}
 
@@ -124,34 +99,19 @@ export class Client {
 	playlists(options?: PlaylistOptions): Promise<Playlist[]>;
 	async playlists(options: PlaylistOptions = {}) {
 		if (options.id === undefined) {
-			const route = this.route(Endpoints.Playlists, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<Playlist[]> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<Playlist[]>(this.route(Endpoints.Playlists, { language: options.language ?? this.language }));
 		}
 		else {
-			const route = this.route(Endpoints.PlaylistById.replace('{playlist-id}', options.id), { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<Playlist> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
+			return this.fetch<Playlist>(this.route(Endpoints.PlaylistById.replace('{playlist-id}', options.id), { language: options.language ?? this.language }));
 		}
 	}
 
 	shop(options: ShopOptions & { combined: true }): Promise<CombinedShop>;
 	shop(options?: ShopOptions): Promise<Shop>;
 	async shop(options: ShopOptions = {}) {
-		if (options.combined) {
-			const route = this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<CombinedShop> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
-		}
-		else {
-			const route = this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language });
-			const res = await this.fetch(route) as Raw<Shop> | RawFortniteAPIError;
-			if (res.status !== 200) throw new FortniteAPIError(res, route);
-			return res.data;
-		}
+		return (options.combined)
+			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language }))
+			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, { language: options.language ?? this.language }));
 	}
 
 	async stats(options: NameStatsOptions | IdStatsOptions) {
@@ -174,8 +134,6 @@ export class Client {
 			route = this.route(Endpoints.BRStatsByAccountId.replace('{accountId}', options.id), params);
 		}
 
-		const res = await this.fetch(route, true) as Raw<Stats> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
-		return res.data;
+		return this.fetch<Stats>(route, true);
 	}
 }
