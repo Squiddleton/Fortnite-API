@@ -95,7 +95,7 @@ export interface Cosmetic {
 		image: string | null;
 		backendValue: string;
 	} | null;
-	set: CosmeticValues;
+	set: CosmeticValues | null;
 	introduction: {
 		chapter: string;
 		season: string;
