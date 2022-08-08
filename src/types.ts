@@ -93,6 +93,7 @@ export interface Cosmetic {
 	series: {
 		value: string;
 		image: string | null;
+		colors: string[];
 		backendValue: string;
 	} | null;
 	set: CosmeticValues | null;
