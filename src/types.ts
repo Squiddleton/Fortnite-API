@@ -573,7 +573,7 @@ export interface PlatformStats {
 	ltm: BaseStats;
 }
 
-export interface Stats {
+export interface Stats<image extends boolean> {
 	account: {
 		id: string;
 		name: string;
@@ -582,7 +582,7 @@ export interface Stats {
 		level: number;
 		progress: number;
 	};
-	image: string | null;
+	image: image extends true ? string : null;
 	stats: {
 		all: PlatformStats;
 		keyboardMouse: PlatformStats;
@@ -632,10 +632,12 @@ export interface IdStatsOptions extends BaseStatOptions {
 	id: string;
 }
 
+export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
+
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | NewCosmetics | Cosmetic | Cosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | CombinedShop | Shop | Stats;
+export type AnyData = AES | Banner[] | BannerColor[] | NewCosmetics | Cosmetic | Cosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | CombinedShop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
@@ -648,4 +650,4 @@ export interface Raw<Data extends AnyData> {
 /**
  * Any options object used as a Client method's parameter
  */
-export type AnyEndpointOptions = AllCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | NameStatsOptions | IdStatsOptions;
+export type AnyEndpointOptions = AllCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | AnyStatsOptions;

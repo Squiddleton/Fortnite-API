@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, IdStatsOptions, Language, Map, NameStatsOptions, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError } from './types.js';
+import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, Language, Map, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -220,13 +220,15 @@ export class Client {
 			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params));
 	}
 
+	stats(options: AnyStatsOptions & { image: 'all' | 'keyboardMouse' | 'gamepad' | 'touch' }): Promise<Stats<true>>;
+	stats(options?: AnyStatsOptions): Promise<Stats<false>>;
 	/**
 	 * Fetches a user's stats by name or id.
 	 *
 	 * @param options - Options for fetching stats
 	 * @returns The user's stats
 	 */
-	async stats(options: NameStatsOptions | IdStatsOptions) {
+	async stats(options: AnyStatsOptions) {
 		if (this.key === null) throw new TypeError('Client#stats() requires an authorization key passed into the Client constructor options. You may request one at https://dash.fortnite-api.com/account');
 
 		const hasName = 'name' in options;
@@ -246,6 +248,6 @@ export class Client {
 			route = this.route(Endpoints.BRStatsByAccountId.replace('{accountId}', options.id), params);
 		}
 
-		return this.fetch<Stats>(route, true);
+		return this.fetch<Stats<boolean>>(route, true);
 	}
 }
