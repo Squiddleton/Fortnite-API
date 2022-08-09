@@ -12,7 +12,7 @@ export class FortniteAPIError extends Error {
 	/**
 	 * The error's status code
 	 */
-	code: number;
+	code: 400 | 403 | 404;
 	/**
 	 * The URL which threw the error
 	 */
