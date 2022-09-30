@@ -1,6 +1,6 @@
 {
   "name": "@squiddleton/fortnite-api",
-  "description": "A Node.js-compatible wrapper for Fortnite-API written in TypeScript",
+  "description": "A Node.js-compatible wrapper for Fortnite-API",
   "version": "0.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
