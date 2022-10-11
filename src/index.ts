@@ -62,7 +62,7 @@ export class Client {
 	 * @param keyFormat - The AES key's format
 	 * @returns Information about the current AES key
 	 */
-	async aes(keyFormat: 'hex' | 'base64' = 'hex') {
+	aes(keyFormat: 'hex' | 'base64' = 'hex') {
 		return this.fetch<AES>(this.route(Endpoints.AES, { keyFormat }));
 	}
 
@@ -72,7 +72,7 @@ export class Client {
 	 * @param language - The language for the returned data
 	 * @returns An array of every banner
 	 */
-	async banners(language: Language = this.language) {
+	banners(language: Language = this.language) {
 		return this.fetch<Banner[]>(this.route(Endpoints.Banners, { language }));
 	}
 	/**
@@ -80,7 +80,7 @@ export class Client {
 	 *
 	 * @returns An array of every banner color
 	 */
-	async bannerColors() {
+	bannerColors() {
 		return this.fetch<BannerColor[]>(this.route(Endpoints.BannerColors));
 	}
 
@@ -90,7 +90,7 @@ export class Client {
 	 * @param name - The creator code's name
 	 * @returns Information about the creator code
 	 */
-	async creatorCode(name: string) {
+	creatorCode(name: string) {
 		return this.fetch<CreatorCode>(this.route(Endpoints.CreatorCode, { name }));
 	}
 
@@ -108,7 +108,7 @@ export class Client {
 	 * @returns An array of all cosmetics
 	 */
 	listCosmetics(options?: AllCosmeticsOptions): Promise<Cosmetic[]>;
-	async listCosmetics(options: AllCosmeticsOptions = {}) {
+	listCosmetics(options: AllCosmeticsOptions = {}) {
 		const params = { language: options.language ?? this.language };
 		return options.new
 			? this.fetch<NewCosmetics>(this.route(Endpoints.NewCosmetics, params))
@@ -120,7 +120,7 @@ export class Client {
 	 * @param options - Options for finding a cosmetic
 	 * @returns A cosmetic that matches the search parameters
 	 */
-	async findCosmetic(options: CosmeticSearchOptions<'single'>) {
+	findCosmetic(options: CosmeticSearchOptions<'single'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<Cosmetic>(
 			options.id === undefined
@@ -134,7 +134,7 @@ export class Client {
 	 * @param options - Options for filtering cosmetics
 	 * @returns All cosmetics that match the search parameters
 	 */
-	async filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
+	filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<Cosmetic[]>(
 			options.id === undefined
@@ -149,7 +149,7 @@ export class Client {
 	 * @param language - The language for the returned data
 	 * @returns Information about the current map
 	 */
-	async map(language: Language = this.language) {
+	map(language: Language = this.language) {
 		return this.fetch<Map>(this.route(Endpoints.Map, { language }));
 	}
 
@@ -167,7 +167,7 @@ export class Client {
 	 * @returns All modes' news
 	 */
 	news(options?: NewsOptions): Promise<AllNews>;
-	async news(options: NewsOptions = {}) {
+	news(options: NewsOptions = {}) {
 		const params = { language: options.language ?? this.language };
 		return options.mode === undefined
 			? this.fetch<AllNews>(this.route(Endpoints.News, params))
@@ -192,7 +192,7 @@ export class Client {
 	 * @returns An array of all playlists
 	 */
 	playlists(options?: PlaylistOptions): Promise<Playlist[]>;
-	async playlists(options: PlaylistOptions = {}) {
+	playlists(options: PlaylistOptions = {}) {
 		const params = { language: options.language ?? this.language };
 		return options.id === undefined
 			? this.fetch<Playlist[]>(this.route(Endpoints.Playlists, params))
@@ -213,7 +213,7 @@ export class Client {
 	 * @returns The item shop with separate normal and special categories
 	 */
 	shop(options?: ShopOptions): Promise<Shop>;
-	async shop(options: ShopOptions = {}) {
+	shop(options: ShopOptions = {}) {
 		const params = { language: options.language ?? this.language };
 		return options.combined
 			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params))
@@ -228,7 +228,7 @@ export class Client {
 	 * @param options - Options for fetching stats
 	 * @returns The user's stats
 	 */
-	async stats(options: AnyStatsOptions) {
+	stats(options: AnyStatsOptions) {
 		if (this.key === null) throw new TypeError('Client#stats() requires an authorization key passed into the Client constructor options. You may request one at https://dash.fortnite-api.com/account');
 
 		const hasName = 'name' in options;
