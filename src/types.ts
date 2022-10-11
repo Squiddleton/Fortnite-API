@@ -96,7 +96,11 @@ export interface Cosmetic {
 		colors: string[];
 		backendValue: string;
 	} | null;
-	set: CosmeticValues | null;
+	set: {
+		value: string;
+		text: string;
+		backendValue: string;
+	} | null;
 	introduction: {
 		chapter: string;
 		season: string;
