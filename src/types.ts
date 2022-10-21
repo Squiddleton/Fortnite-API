@@ -115,7 +115,7 @@ export interface Cosmetic {
 	};
 	variants: {
 		channel: string;
-		type: string;
+		type: string | null;
 		options: {
 			tag: string;
 			name: string;
