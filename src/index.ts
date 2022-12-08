@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, Language, Map, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions } from './types.js';
+import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, Language, Map, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions, AESFormat, GameMode, Input } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -62,7 +62,7 @@ export class Client {
 	 * @param keyFormat - The AES key's format
 	 * @returns Information about the current AES key
 	 */
-	aes(keyFormat: 'hex' | 'base64' = 'hex') {
+	aes(keyFormat: AESFormat = 'hex') {
 		return this.fetch<AES>(this.route(Endpoints.AES, { keyFormat }));
 	}
 
@@ -159,7 +159,7 @@ export class Client {
 	 * @param options - Options for fetching the news
 	 * @returns The provided mode's news
 	 */
-	news(options: NewsOptions & { mode: 'br' | 'stw' | 'creative' }): Promise<News>;
+	news(options: NewsOptions & { mode: GameMode }): Promise<News>;
 	/**
 	 * Fetches every mode's news.
 	 *
@@ -220,7 +220,7 @@ export class Client {
 			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params));
 	}
 
-	stats(options: AnyStatsOptions & { image: 'all' | 'keyboardMouse' | 'gamepad' | 'touch' }): Promise<Stats<true>>;
+	stats(options: AnyStatsOptions & { image: Input }): Promise<Stats<true>>;
 	stats(options?: AnyStatsOptions): Promise<Stats<false>>;
 	/**
 	 * Fetches a user's stats by name or id.

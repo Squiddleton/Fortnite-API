@@ -1,3 +1,15 @@
+export type AccountType = 'epic' | 'psn' | 'xbl';
+
+export type AESFormat = 'hex' | 'base64';
+
+export type GameMode = 'br' | 'stw' | 'creative';
+
+export type Input = 'all' | 'keyboardMouse' | 'gamepad' | 'touch';
+
+export type MatchMethod = 'full' | 'contains' | 'starts' | 'ends';
+
+export type TimeWindow = 'season' | 'lifetime';
+
 /**
  * A string that can be converted into a Date
  */
@@ -175,7 +187,7 @@ export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType> e
 	 *
 	 * Defaults to "full".
 	 */
-	matchMethod?: 'full' | 'contains' | 'starts' | 'ends';
+	matchMethod?: MatchMethod;
 	/**
 	 * The cosmetic's id for Client#findCosmetics() or an array of ids for Client#filterCosmetics()
 	 */
@@ -368,7 +380,7 @@ export interface NewsOptions extends LanguageSupportingOption {
 	 *
 	 * Defaults to return all modes' news.
 	 */
-	mode?: 'br' | 'stw' | 'creative';
+	mode?: GameMode;
 }
 
 export interface Playlist {
@@ -603,7 +615,7 @@ export interface BaseStatOptions {
 	 *
 	 * Defaults to "lifetime".
 	 */
-	timeWindow?: 'season' | 'lifetime';
+	timeWindow?: TimeWindow;
 	/**
 	 * Whether to include an automatically-generated image of a control input's stats
 	 *
@@ -611,7 +623,7 @@ export interface BaseStatOptions {
 	 *
 	 * Stats#image returns null by default.
 	 */
-	image?: 'all' | 'keyboardMouse' | 'gamepad' | 'touch';
+	image?: Input;
 }
 
 export interface NameStatsOptions extends BaseStatOptions {
@@ -626,7 +638,7 @@ export interface NameStatsOptions extends BaseStatOptions {
 	 *
 	 * Defaults to "epic".
 	 */
-	accountType?: 'epic' | 'psn' | 'xbl';
+	accountType?: AccountType;
 }
 
 export interface IdStatsOptions extends BaseStatOptions {
