@@ -1,3 +1,15 @@
+export type AccountType = 'epic' | 'psn' | 'xbl';
+
+export type AESFormat = 'hex' | 'base64';
+
+export type GameMode = 'br' | 'stw' | 'creative';
+
+export type Input = 'all' | 'keyboardMouse' | 'gamepad' | 'touch';
+
+export type MatchMethod = 'full' | 'contains' | 'starts' | 'ends';
+
+export type TimeWindow = 'season' | 'lifetime';
+
 /**
  * A string that can be converted into a Date
  */
@@ -19,6 +31,181 @@ export type StringRecord = {
  * All supported languages for many endpoints
  */
 export type Language = 'ar' | 'de' | 'en' | 'es' | 'es-419' | 'fr' | 'it' | 'ja' | 'ko' | 'pl' | 'pt-BR' | 'ru' | 'tr' | 'zh-CN' | 'zh-Hant';
+
+export interface BannerImages {
+	smallIcon: string;
+	icon: string;
+}
+
+export interface BattlePassProgress {
+	level: number;
+	progress: number;
+}
+
+export interface Bundle {
+	name: string;
+	info: string;
+	image: string;
+}
+
+export interface Coordinates {
+	x: number;
+	y: number;
+	z: number;
+}
+
+export interface CosmeticImages {
+	smallIcon: string | null;
+	icon: string;
+	featured: string | null;
+	other: StringRecord | null;
+}
+
+export interface CosmeticIntroduction {
+	chapter: string;
+	season: string;
+	text: string;
+	backendValue: number;
+}
+
+export interface CosmeticSeries {
+	value: string;
+	image: string | null;
+	colors: string[];
+	backendValue: string;
+}
+
+export interface CosmeticSet {
+	value: string;
+	text: string;
+	backendValue: string;
+}
+
+export interface DynamicKey {
+	pakFilename: string;
+	pakGuild: string;
+	key: string;
+}
+
+export interface EntryBanner {
+	value: string;
+	intensity: string;
+	backendValue: string;
+}
+
+export interface EntrySession {
+	id: string;
+	name: string;
+	index: number;
+	landingPriority: number;
+	sortOffersByOwnership: boolean;
+	showIneligibleOffers: boolean;
+	showTimer: boolean;
+	enableToastNotification: boolean;
+	hidden: boolean;
+}
+
+export interface EpicAccount {
+	id: string;
+	name: string;
+}
+
+export interface MapImages {
+	blank: string;
+	pois: string;
+}
+
+export interface MaterialInstance {
+	id: string;
+	images: StringRecord;
+	colors: StringRecord;
+	scalings: {
+		[scaling: string]: number;
+	};
+	flags: {
+		[flag: string]: boolean;
+	};
+}
+
+export interface Message {
+	title: string;
+	body: string;
+	image: string;
+	adspace: string;
+}
+
+export interface MOTD {
+	id: string;
+	title: string;
+	tabTitle: string;
+	body: string;
+	image: string;
+	titleImage: string;
+	sortingPriority: number;
+	hidden: boolean;
+}
+
+export interface Option {
+	tag: string;
+	name: string;
+	image: string;
+}
+
+export interface PlaylistImages {
+	showcase: string | null;
+	missionIcon: string | null;
+}
+
+export interface POI {
+	id: string;
+	name: string;
+	location: Coordinates;
+}
+
+export interface ShopBanner {
+	value: string;
+	intensity: string;
+	backendValue: string;
+}
+
+export interface ShopSection {
+	id: string;
+	name: string;
+	index: number;
+	landingPriority: number;
+	sortOffersByOwnership: boolean;
+	showIneligibleOffers: boolean;
+	showIneligibleOffersIfGiftable: boolean;
+	showTimer: boolean;
+	enableToastNotification: boolean;
+	hidden: boolean;
+}
+
+export interface Variant {
+	channel: string;
+	type: string | null;
+	options: Option[];
+}
+
+export interface VoteEntry {
+	regularPrice: number;
+	finalPrice: number;
+	bundle: Bundle;
+	banner: EntryBanner;
+	giftable: boolean;
+	refundable: boolean;
+	sortPriority: number;
+	categories: string[];
+	sectionId: string;
+	session: EntrySession;
+	devName: string;
+	offerId: string;
+	displayAssetPath: string;
+	tileSize: string;
+	newDisplayAssetPath: string;
+	newDisplayAsset: NewDisplayAsset;
+	items: Cosmetic[];
+}
 
 /**
  * Options that support a language parameter
@@ -55,11 +242,7 @@ export interface RawFortniteAPIError {
 export interface AES {
 	build: string;
 	mainKey: string | null;
-	dynamicKeys: {
-		pakFilename: string;
-		pakGuild: string;
-		key: string;
-	}[];
+	dynamicKeys: DynamicKey[];
 	updated: DateString;
 }
 
@@ -70,10 +253,7 @@ export interface Banner {
 	description: string;
 	category: string | null;
 	fullUsageRights: boolean;
-	images: {
-		smallIcon: string;
-		icon: string;
-	};
+	images: BannerImages;
 }
 
 export interface BannerColor {
@@ -90,38 +270,11 @@ export interface Cosmetic {
 	customExclusiveCallout?: string;
 	type: CosmeticValues;
 	rarity: CosmeticValues;
-	series: {
-		value: string;
-		image: string | null;
-		colors: string[];
-		backendValue: string;
-	} | null;
-	set: {
-		value: string;
-		text: string;
-		backendValue: string;
-	} | null;
-	introduction: {
-		chapter: string;
-		season: string;
-		text: string;
-		backendValue: number;
-	} | null;
-	images: {
-		smallIcon: string | null;
-		icon: string;
-		featured: string | null;
-		other: StringRecord | null;
-	};
-	variants: {
-		channel: string;
-		type: string;
-		options: {
-			tag: string;
-			name: string;
-			image: string;
-		}[];
-	}[] | null;
+	series: CosmeticSeries | null;
+	set: CosmeticSet | null;
+	introduction: CosmeticIntroduction | null;
+	images: CosmeticImages;
+	variants: Variant[] | null;
 	builtInEmoteIds?: string[];
 	searchTags: string[] | null;
 	gameplayTags: string[] | null;
@@ -175,7 +328,7 @@ export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType> e
 	 *
 	 * Defaults to "full".
 	 */
-	matchMethod?: 'full' | 'contains' | 'starts' | 'ends';
+	matchMethod?: MatchMethod;
 	/**
 	 * The cosmetic's id for Client#findCosmetics() or an array of ids for Client#filterCosmetics()
 	 */
@@ -308,50 +461,22 @@ export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType> e
 
 export interface CreatorCode {
 	code: string;
-	account: {
-		id: string;
-		name: string;
-	};
+	account: EpicAccount;
 	status: string;
 	verified: boolean;
 }
 
 export interface Map {
-	images: {
-		blank: string;
-		pois: string;
-	};
-	pois: {
-		id: string;
-		name: string;
-		location: {
-			x: number;
-			y: number;
-			z: number;
-		};
-	}[];
+	images: MapImages;
+	pois: POI[];
 }
 
 export interface News {
 	hash: string;
 	date: DateString;
 	image: string | null;
-	motds: {
-		id: string;
-		title: string;
-		tabTitle: string;
-		body: string;
-		image: string;
-		titleImage: string;
-		sortingPriority: number;
-		hidden: boolean;
-	}[] | null;
-	messages: {
-		title: string;
-		body: string;
-		image: string;
-		adspace: string;
-	}[] | null;
+	motds: MOTD[] | null;
+	messages: Message[] | null;
 }
 
 export interface AllNews {
@@ -368,7 +493,7 @@ export interface NewsOptions extends LanguageSupportingOption {
 	 *
 	 * Defaults to return all modes' news.
 	 */
-	mode?: 'br' | 'stw' | 'creative';
+	mode?: GameMode;
 }
 
 export interface Playlist {
@@ -389,10 +514,7 @@ export interface Playlist {
 	isLimitedTimeMode: boolean;
 	isLargeTeamGame: boolean;
 	accumulateToProfileStats: boolean;
-	images: {
-		showcase: string | null;
-		missionIcon: string | null;
-	};
+	images: PlaylistImages;
 	gameplayTags: string[];
 	path: string;
 	added: DateString;
@@ -414,49 +536,20 @@ export interface CosmeticValues {
 export interface NewDisplayAsset {
 	id: string;
 	cosmeticId: string | null;
-	materialInstances: {
-		id: string;
-		images: StringRecord;
-		colors: StringRecord;
-		scalings: {
-			[scaling: string]: number;
-		};
-		flags: {
-			[flag: string]: boolean;
-		};
-	}[];
+	materialInstances: MaterialInstance[];
 }
 
 export interface ShopEntry {
 	regularPrice: number;
 	finalPrice: number;
-	bundle: {
-		name: string;
-		info: string;
-		image: string;
-	};
-	banner: {
-		value: string;
-		intensity: string;
-		backendValue: string;
-	};
+	bundle: Bundle;
+	banner: ShopBanner;
 	giftable: boolean;
 	refundable: boolean;
 	sortPriority: number;
 	categories: string[];
 	sectionId: string;
-	section: {
-		id: string;
-		name: string;
-		index: number;
-		landingPriority: number;
-		sortOffersByOwnership: boolean;
-		showIneligibleOffers: boolean;
-		showIneligibleOffersIfGiftable: boolean;
-		showTimer: boolean;
-		enableToastNotification: boolean;
-		hidden: boolean;
-	};
+	section: ShopSection;
 	devName: string;
 	offerId: string;
 	displayAssetPath: string;
@@ -466,65 +559,29 @@ export interface ShopEntry {
 	items: Cosmetic[];
 }
 
-export type ShopCategory = {
+export interface ShopCategory {
 	name: string | null;
 	entries: ShopEntry[];
-} | null;
+}
 
 export interface Votes {
 	name: string;
-	entries: {
-		regularPrice: number;
-		finalPrice: number;
-		bundle: {
-			name: string;
-			info: string;
-			image: string;
-		};
-		banner: {
-			value: string;
-			intensity: string;
-			backendValue: string;
-		};
-		giftable: boolean;
-		refundable: boolean;
-		sortPriority: number;
-		categories: string[];
-		sectionId: string;
-		session: {
-			id: string;
-			name: string;
-			index: number;
-			landingPriority: number;
-			sortOffersByOwnership: boolean;
-			showIneligibleOffers: boolean;
-			showTimer: boolean;
-			enableToastNotification: boolean;
-			hidden: boolean;
-		};
-		devName: string;
-		offerId: string;
-		displayAssetPath: string;
-		tileSize: string;
-		newDisplayAssetPath: string;
-		newDisplayAsset: NewDisplayAsset;
-		items: Cosmetic[];
-	}[];
+	entries: VoteEntry[];
 }
 
 export interface CombinedShop {
 	hash: string;
 	date: DateString;
 	vbuckIcon: string;
-	featured: ShopCategory;
-	daily: ShopCategory;
+	featured: ShopCategory | null;
+	daily: ShopCategory | null;
 	votes: Votes[] | null;
 	voteWinners: Votes[] | null;
 }
 
 export interface Shop extends CombinedShop {
-	specialFeatured: ShopCategory;
-	specialDaily: ShopCategory;
+	specialFeatured: ShopCategory | null;
+	specialDaily: ShopCategory | null;
 }
 
 export interface ShopOptions extends LanguageSupportingOption {
@@ -578,21 +635,10 @@ export interface PlatformStats {
 }
 
 export interface Stats<image extends boolean> {
-	account: {
-		id: string;
-		name: string;
-	};
-	battlePass: {
-		level: number;
-		progress: number;
-	};
+	account: EpicAccount;
+	battlePass: BattlePassProgress;
 	image: image extends true ? string : null;
-	stats: {
-		all: PlatformStats;
-		keyboardMouse: PlatformStats;
-		gamepad: PlatformStats;
-		touch: PlatformStats;
-	};
+	stats: Record<Input, PlatformStats>;
 }
 
 export interface BaseStatOptions {
@@ -603,7 +649,7 @@ export interface BaseStatOptions {
 	 *
 	 * Defaults to "lifetime".
 	 */
-	timeWindow?: 'season' | 'lifetime';
+	timeWindow?: TimeWindow;
 	/**
 	 * Whether to include an automatically-generated image of a control input's stats
 	 *
@@ -611,7 +657,7 @@ export interface BaseStatOptions {
 	 *
 	 * Stats#image returns null by default.
 	 */
-	image?: 'all' | 'keyboardMouse' | 'gamepad' | 'touch';
+	image?: Input;
 }
 
 export interface NameStatsOptions extends BaseStatOptions {
@@ -626,7 +672,7 @@ export interface NameStatsOptions extends BaseStatOptions {
 	 *
 	 * Defaults to "epic".
 	 */
-	accountType?: 'epic' | 'psn' | 'xbl';
+	accountType?: AccountType;
 }
 
 export interface IdStatsOptions extends BaseStatOptions {

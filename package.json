@@ -1,7 +1,7 @@
 {
   "name": "@squiddleton/fortnite-api",
   "description": "A Node.js-compatible wrapper for Fortnite-API",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.7"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
