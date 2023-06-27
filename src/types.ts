@@ -498,7 +498,7 @@ export interface NewsOptions extends LanguageSupportingOption {
 
 export interface Playlist {
 	id: string;
-	name: string;
+	name: string | null;
 	subName: string | null;
 	description: string | null;
 	gameType: string | null;
