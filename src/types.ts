@@ -56,7 +56,7 @@ export interface Coordinates {
 
 export interface CosmeticImages {
 	smallIcon: string | null;
-	icon: string;
+	icon: string | null;
 	featured: string | null;
 	other: StringRecord | null;
 }
