@@ -235,7 +235,7 @@ export interface ClientOptions extends LanguageSupportingOption {
  * A non-200 response received from Fortnite-API
  */
 export interface RawFortniteAPIError {
-	status: 400 | 403 | 404;
+	status: number;
 	error: string;
 }
 

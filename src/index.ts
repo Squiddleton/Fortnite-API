@@ -12,7 +12,7 @@ export class FortniteAPIError extends Error {
 	/**
 	 * The error's status code
 	 */
-	code: 400 | 403 | 404;
+	code: number;
 	/**
 	 * The URL which threw the error
 	 */
@@ -52,7 +52,7 @@ export class Client {
 	}
 	private async fetch<Data extends AnyData>(route: string, authorization = false) {
 		const res = await fetch(route, authorization && this.key !== null ? { headers: { Authorization: this.key } } : undefined).then(r => r.json()) as Raw<Data> | RawFortniteAPIError;
-		if (res.status !== 200) throw new FortniteAPIError(res, route);
+		if ('error' in res) throw new FortniteAPIError(res, route);
 		return res.data;
 	}
 
