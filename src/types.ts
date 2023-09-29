@@ -549,7 +549,7 @@ export interface ShopEntry {
 	sortPriority: number;
 	categories: string[];
 	sectionId: string;
-	section: ShopSection;
+	section: ShopSection | null;
 	devName: string;
 	offerId: string;
 	displayAssetPath: string;
