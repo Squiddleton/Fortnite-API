@@ -168,6 +168,14 @@ export interface ShopBanner {
 	backendValue: string;
 }
 
+export interface ShopLayout {
+	id: string;
+	name: string;
+	category: string;
+	index: number;
+	showIneligibleOffers: string;
+}
+
 export interface ShopSection {
 	id: string;
 	name: string;
@@ -550,6 +558,7 @@ export interface ShopEntry {
 	categories: string[];
 	sectionId: string;
 	section: ShopSection | null;
+	layout: ShopLayout;
 	devName: string;
 	offerId: string;
 	displayAssetPath: string;
