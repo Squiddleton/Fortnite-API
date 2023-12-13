@@ -147,7 +147,7 @@ export interface MOTD {
 
 export interface Option {
 	tag: string;
-	name: string;
+	name: string | null;
 	image: string;
 }
 
