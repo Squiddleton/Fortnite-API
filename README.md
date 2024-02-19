@@ -30,8 +30,8 @@ client.stats({ name: 'Donald Mustard' })
 
 const clientWithoutOptions = new Client(); // No options are required for general usage
 
-clientWithoutOptions.listCosmetics()
-    .then(console.log); // Logs an array of cosmetics
+clientWithoutOptions.cosmetics()
+    .then(cosmetics => console.log(cosmetics.br)); // Logs an array of Battle Royale cosmetics
 
 clientWithoutOptions.findCosmetic({ id: 'Lorem ipsum' })
     .then(console.log)
@@ -44,7 +44,7 @@ clientWithoutOptions.stats({ name: 'Mark Rein' })
 
 ## Types
 
-This project is written in TypeScript, but its distributed code is transpiled into CommonJS. As such, it retains the full usability of CommonJS modules while adhering to strictly-typed parameters and responses. IntelliSense is supported via the declaration files created upon transpiling. The interfaces for function arguments and returned structures are also exported in these declaration files, so the package supports TypeScript usage with easily-readable interface names, such as `Cosmetic` for the cosmetics endpoints and `Stats` for the stats endpoints.
+This project is written in TypeScript, but its distributed code is transpiled into CommonJS. As such, it retains the full usability of CommonJS modules while adhering to strictly-typed parameters and responses. IntelliSense is supported via the declaration files created upon transpiling. The interfaces for function arguments and returned structures are also exported in these declaration files, so the package supports TypeScript usage with easily-readable interface names, such as `BRCosmetic` for the Battle Royale cosmetics endpoints and `Stats` for the stats endpoints.
 
 ## Contributing
 
