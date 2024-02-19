@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AESFormat, AllBRCosmeticsOptions, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CombinedShop, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, Language, Map, NewBRCosmetics, NewCosmeticsData, NewShop, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, ShopOptions, Stats, StringRecord, TrackCosmetic } from './types.js';
+import type { AES, AESFormat, AllBRCosmeticsOptions, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CombinedShop, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, Language, NewBRCosmetics, NewCosmeticsData, NewShop, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, ShopOptions, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -216,7 +216,7 @@ export class Client {
 	 * @returns Information about the current map
 	 */
 	map(language: Language = this.language) {
-		return this.fetch<Map>(this.route(Endpoints.Map, { language }));
+		return this.fetch<FortniteMap>(this.route(Endpoints.Map, { language }));
 	}
 
 	/**

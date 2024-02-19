@@ -579,10 +579,15 @@ export interface CreatorCode {
 	verified: boolean;
 }
 
-export interface Map {
+export interface FortniteMap {
 	images: MapImages;
 	pois: POI[];
 }
+
+/**
+ * @deprecated Use FortniteMap instead.
+ */
+export type Map = FortniteMap;
 
 export interface News {
 	hash: string;
@@ -820,7 +825,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
