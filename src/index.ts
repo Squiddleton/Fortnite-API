@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, Cosmetic, CosmeticSearchOptions, CreatorCode, Language, Map, NewCosmetics, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions, AESFormat, GameMode, Input } from './types.js';
+import type { AES, AllBRCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, CosmeticSearchOptions, CreatorCode, Language, Map, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions, AESFormat, GameMode, Input, NewShop, NewCosmeticsData, CosmeticsOptions, TrackCosmetic, CarCosmetic, InstrumentCosmetic, LEGOCosmetic, AllCosmetics, NewBRCosmetics, BRCosmetic } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -85,6 +85,72 @@ export class Client {
 	}
 
 	/**
+	 * Fetches all recently-released cosmetics.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of recently-released cosmetics
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'new' }): Promise<NewCosmeticsData>;
+	/**
+	 * Fetches all jam tracks.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of jam tracks
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'tracks' }): Promise<TrackCosmetic[]>;
+	/**
+	 * Fetches all cars.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of cars
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'cars' }): Promise<CarCosmetic[]>;
+	/**
+	 * Fetches all instruments.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of instruments
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'instruments' }): Promise<InstrumentCosmetic[]>;
+	/**
+	 * Fetches all LEGO cosmetics.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of LEGO cosmetics
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'lego' }): Promise<LEGOCosmetic[]>;
+	/**
+	 * Fetches all cosmetics.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An object with mapped by each type of cosmetic
+	 */
+	cosmetics(options?: CosmeticsOptions): Promise<AllCosmetics>;
+	cosmetics(options: CosmeticsOptions = {}) {
+		const params = { language: options.language ?? this.language };
+		switch (options.cosmeticType) {
+			case 'new': {
+				return this.fetch<NewCosmeticsData>(this.route(Endpoints.NewAllCosmetics, params));
+			}
+			case 'tracks': {
+				return this.fetch<TrackCosmetic[]>(this.route(Endpoints.Tracks, params));
+			}
+			case 'cars': {
+				return this.fetch<CarCosmetic[]>(this.route(Endpoints.Cars, params));
+			}
+			case 'instruments': {
+				return this.fetch<InstrumentCosmetic[]>(this.route(Endpoints.Instruments, params));
+			}
+			case 'lego': {
+				return this.fetch<LEGOCosmetic[]>(this.route(Endpoints.LEGO, params));
+			}
+			default: {
+				return this.fetch<AllCosmetics>(this.route(Endpoints.Cosmetics, params));
+			}
+		}
+	}
+
+	/**
 	 * Fetches information about a creator code.
 	 *
 	 * @param name - The creator code's name
@@ -100,19 +166,19 @@ export class Client {
 	 * @param options - Options for listing cosmetics
 	 * @returns An array of recently-released cosmetics
 	 */
-	listCosmetics(options: AllCosmeticsOptions & { new: true }): Promise<NewCosmetics>;
+	listCosmetics(options: AllBRCosmeticsOptions & { new: true }): Promise<NewBRCosmetics>;
 	/**
 	 * Lists all cosmetics.
 	 *
 	 * @param options - Options for listing cosmetics
 	 * @returns An array of all cosmetics
 	 */
-	listCosmetics(options?: AllCosmeticsOptions): Promise<Cosmetic[]>;
-	listCosmetics(options: AllCosmeticsOptions = {}) {
+	listCosmetics(options?: AllBRCosmeticsOptions): Promise<BRCosmetic[]>;
+	listCosmetics(options: AllBRCosmeticsOptions = {}) {
 		const params = { language: options.language ?? this.language };
 		return options.new
-			? this.fetch<NewCosmetics>(this.route(Endpoints.NewCosmetics, params))
-			: this.fetch<Cosmetic[]>(this.route(Endpoints.CosmeticsList, params));
+			? this.fetch<NewBRCosmetics>(this.route(Endpoints.NewBRCosmetics, params))
+			: this.fetch<BRCosmetic[]>(this.route(Endpoints.BRCosmetics, params));
 	}
 	/**
 	 * Finds the first cosmetic that matches provided search parameters.
@@ -122,7 +188,7 @@ export class Client {
 	 */
 	findCosmetic(options: CosmeticSearchOptions<'single'>) {
 		const language = options.language ?? this.language;
-		return this.fetch<Cosmetic>(
+		return this.fetch<BRCosmetic>(
 			options.id === undefined
 				? this.route(Endpoints.CosmeticsSearch, { ...options, language })
 				: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language })
@@ -136,7 +202,7 @@ export class Client {
 	 */
 	filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
 		const language = options.language ?? this.language;
-		return this.fetch<Cosmetic[]>(
+		return this.fetch<BRCosmetic[]>(
 			options.id === undefined
 				? this.route(Endpoints.CosmeticsSearchAll, { ...options, language })
 				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language }, true)
@@ -200,10 +266,44 @@ export class Client {
 	}
 
 	/**
+	 * Fetches the current item shop.
+	 *
+	 * @param language - The language for the returned data
+	 * @returns The item shop
+	 */
+	newShop(language: Language = this.language) {
+		return this.fetch<NewShop>(this.route(Endpoints.Shop, { language }));
+	}
+
+	/**
 	 * Fetches the current Battle Royale item shop with combined normal and special categories.
 	 *
 	 * @param options - Options for fetching the item shop
 	 * @returns The item shop with combined normal and special categories
+	 */
+	brShop(options: ShopOptions & { combined: true }): Promise<CombinedShop>;
+	/**
+	 * Fetches the current Battle Royale item shop with separate normal and special categories.
+	 *
+	 * @param options - Options for fetching the item shop
+	 * @returns The item shop with separate normal and special categories
+	 */
+	brShop(options?: ShopOptions): Promise<Shop>;
+	brShop(options: ShopOptions = {}) {
+		const params = { language: options.language ?? this.language };
+		return options.combined
+			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params))
+			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params));
+	}
+
+
+	/**
+	 * Fetches the current Battle Royale item shop with combined normal and special categories.
+	 *
+	 * @param options - Options for fetching the item shop
+	 * @returns The item shop with combined normal and special categories
+	 *
+	 * @deprecated Use Client#brShop() instead.
 	 */
 	shop(options: ShopOptions & { combined: true }): Promise<CombinedShop>;
 	/**
@@ -211,13 +311,12 @@ export class Client {
 	 *
 	 * @param options - Options for fetching the item shop
 	 * @returns The item shop with separate normal and special categories
+	 *
+	 * @deprecated Use Client#brShop() instead.
 	 */
 	shop(options?: ShopOptions): Promise<Shop>;
 	shop(options: ShopOptions = {}) {
-		const params = { language: options.language ?? this.language };
-		return options.combined
-			? this.fetch<CombinedShop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params))
-			: this.fetch<Shop>(this.route(options.combined ? Endpoints.BRShopCombined : Endpoints.BRShop, params));
+		return this.brShop(options);
 	}
 
 	stats(options: AnyStatsOptions & { image: Input }): Promise<Stats<true>>;

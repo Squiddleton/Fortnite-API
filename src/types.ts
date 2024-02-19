@@ -58,6 +58,7 @@ export interface CosmeticImages {
 	smallIcon: string | null;
 	icon: string | null;
 	featured: string | null;
+	lego: LEGOCosmeticImages | null;
 	other: StringRecord | null;
 }
 
@@ -110,6 +111,10 @@ export interface EpicAccount {
 	name: string;
 }
 
+export interface LEGOCosmeticImages extends NewCosmeticImages {
+	wide: string | null;
+}
+
 export interface MapImages {
 	blank: string;
 	pois: string;
@@ -119,12 +124,8 @@ export interface MaterialInstance {
 	id: string;
 	images: StringRecord;
 	colors: StringRecord;
-	scalings: {
-		[scaling: string]: number;
-	};
-	flags: {
-		[flag: string]: boolean;
-	};
+	scalings: Record<string, number> | null;
+	flags: Record<string, boolean> | null;
 }
 
 export interface Message {
@@ -143,6 +144,11 @@ export interface MOTD {
 	titleImage: string;
 	sortingPriority: number;
 	hidden: boolean;
+}
+
+export interface NewCosmeticImages {
+	small: string;
+	large: string;
 }
 
 export interface Option {
@@ -189,6 +195,15 @@ export interface ShopSection {
 	hidden: boolean;
 }
 
+export interface TrackDifficulty {
+	vocals: number;
+	guitar: number;
+	bass: number;
+	plasticBass: number;
+	drums: number;
+	plasticDrums: number;
+}
+
 export interface Variant {
 	channel: string;
 	type: string | null;
@@ -212,7 +227,7 @@ export interface VoteEntry {
 	tileSize: string;
 	newDisplayAssetPath: string;
 	newDisplayAsset: NewDisplayAsset;
-	items: Cosmetic[];
+	items: BRCosmetic[];
 }
 
 /**
@@ -271,8 +286,14 @@ export interface BannerColor {
 	subCategoryGroup: number;
 }
 
-export interface Cosmetic {
+export interface BaseCosmetic {
 	id: string;
+	gameplayTags: string[] | null;
+	added: DateString;
+	shopHistory: DateString[] | null;
+}
+
+export interface BRCosmetic extends BaseCosmetic {
 	name: string;
 	description: string;
 	customExclusiveCallout?: string;
@@ -285,7 +306,6 @@ export interface Cosmetic {
 	variants: Variant[] | null;
 	builtInEmoteIds?: string[];
 	searchTags: string[] | null;
-	gameplayTags: string[] | null;
 	metaTags: string[] | null;
 	showcaseVideo: string | null;
 	dynamicPakId: string | null;
@@ -293,27 +313,112 @@ export interface Cosmetic {
 	displayAssetPath: string | null;
 	definitionPath: string | null;
 	path: string;
-	added: DateString;
-	shopHistory: DateString[] | null;
 }
 
-export interface NewCosmetics {
+/**
+ * @deprecated Use BRCosmetic instead.
+ */
+export type Cosmetic = BRCosmetic;
+
+export interface TrackCosmetic extends BaseCosmetic {
+	devName: string;
+	title: string;
+	artist: string;
+	album: null;
+	releaseYear: number;
+	bpm: number;
+	duration: number;
+	difficulty: TrackDifficulty;
+	genres: string[] | null;
+	albumArt: string;
+}
+
+export interface CarCosmetic extends InstrumentCosmetic {
+	vehicleId: string;
+}
+
+export interface InstrumentCosmetic extends BaseCosmetic {
+	type: CosmeticValues;
+	rarity: CosmeticValues;
+	name: string;
+	description: string;
+	images: NewCosmeticImages;
+	series: CosmeticSeries | null;
+	path: string;
+	showcaseVideo: string | null;
+}
+
+export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic;
+
+export interface LEGOCosmetic {
+	id: string;
+	cosmeticId: string;
+	soundLibraryTags: string[] | null;
+	images: LEGOCosmeticImages;
+	path: string;
+	added: DateString;
+}
+
+export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego';
+
+export interface AllCosmetics {
+	br: BRCosmetic[];
+	tracks: TrackCosmetic[];
+	instruments: InstrumentCosmetic[];
+	cars: CarCosmetic[];
+	lego: LEGOCosmetic[];
+}
+
+
+export interface NewCosmeticsData {
+	date: DateString;
+	build: string;
+	previousBuild: string;
+	hashes: Record<CosmeticType, string>;
+	lastAdditions: Record<CosmeticType, DateString>;
+	items: AllCosmetics;
+}
+
+export interface NewBRCosmetics {
 	build: string;
 	previousBuild: string;
 	hash: string;
 	date: DateString;
 	lastAddition: DateString;
-	items: Cosmetic[];
+	items: BRCosmetic[];
 }
 
 /**
- * Options for listing all cosmetics
+ * @deprecated Use NewBRCosmetics instead.
  */
-export interface AllCosmeticsOptions extends LanguageSupportingOption {
+export type NewCosmetics = NewBRCosmetics;
+
+/**
+ * Options for fetching all BR cosmetics
+ */
+export interface AllBRCosmeticsOptions extends LanguageSupportingOption {
 	/**
 	 * Whether to only return new cosmetics
 	 */
 	new?: boolean;
+}
+
+/**
+ * Options for fetching all BR cosmetics
+ * @deprecated Use AllBRCosmeticsOptions instead.
+ */
+export type AllCosmeticsOptions = AllBRCosmeticsOptions;
+
+export type FetchCosmeticType = Exclude<CosmeticType, 'all' | 'br'> | 'new';
+
+/**
+ * Options for fetching all cosmetics
+ */
+export interface CosmeticsOptions extends AllBRCosmeticsOptions {
+	/**
+	 * The type of cosmetics to return
+	 */
+	cosmeticType?: FetchCosmeticType;
 }
 
 /**
@@ -547,7 +652,7 @@ export interface NewDisplayAsset {
 	materialInstances: MaterialInstance[];
 }
 
-export interface ShopEntry {
+export interface BaseShopEntry {
 	regularPrice: number;
 	finalPrice: number;
 	bundle: Bundle;
@@ -565,7 +670,10 @@ export interface ShopEntry {
 	tileSize: string;
 	newDisplayAssetPath: string;
 	newDisplayAsset: NewDisplayAsset;
-	items: Cosmetic[];
+}
+
+export interface ShopEntry extends BaseShopEntry {
+	items: BRCosmetic[];
 }
 
 export interface ShopCategory {
@@ -576,6 +684,22 @@ export interface ShopCategory {
 export interface Votes {
 	name: string;
 	entries: VoteEntry[];
+}
+
+export type NewCosmetic = BRCosmetic | TrackCosmetic | InstrumentCosmetic | CarCosmetic;
+
+export interface NewShopEntry extends BaseShopEntry {
+	brItems: BRCosmetic[] | null;
+	tracks: TrackCosmetic[] | null;
+	instruments: InstrumentCosmetic[] | null;
+	cars: CarCosmetic[] | null;
+}
+
+export interface NewShop {
+	hash: string;
+	date: DateString;
+	vbuckIcon: string;
+	entries: NewShopEntry[];
 }
 
 export interface CombinedShop {
@@ -696,7 +820,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | NewCosmetics | Cosmetic | Cosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | CombinedShop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | Map | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
@@ -709,4 +833,4 @@ export interface Raw<Data extends AnyData> {
 /**
  * Any options object used as a Client method's parameter
  */
-export type AnyEndpointOptions = AllCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | AnyStatsOptions;
+export type AnyEndpointOptions = AllBRCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | AnyStatsOptions;
