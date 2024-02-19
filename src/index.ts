@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AllBRCosmeticsOptions, AllNews, AnyData, AnyEndpointOptions, Banner, BannerColor, BaseStatOptions, ClientOptions, CombinedShop, CosmeticSearchOptions, CreatorCode, Language, Map, News, NewsOptions, Playlist, PlaylistOptions, Shop, ShopOptions, Stats, StringRecord, Raw, RawFortniteAPIError, AnyStatsOptions, AESFormat, GameMode, Input, NewShop, NewCosmeticsData, CosmeticsOptions, TrackCosmetic, CarCosmetic, InstrumentCosmetic, LEGOCosmetic, AllCosmetics, NewBRCosmetics, BRCosmetic } from './types.js';
+import type { AES, AESFormat, AllBRCosmeticsOptions, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CombinedShop, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, Language, Map, NewBRCosmetics, NewCosmeticsData, NewShop, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, ShopOptions, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
