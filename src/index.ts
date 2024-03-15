@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AESFormat, AllBRCosmeticsOptions, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CombinedShop, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, Language, NewBRCosmetics, NewCosmeticsData, NewShop, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, ShopOptions, Stats, StringRecord, TrackCosmetic } from './types.js';
+import type { AES, AESFormat, AllBRCosmeticsOptions, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CombinedShop, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewBRCosmetics, NewCosmeticsData, NewShop, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, ShopOptions, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -143,6 +143,9 @@ export class Client {
 			}
 			case 'lego': {
 				return this.fetch<LEGOCosmetic[]>(this.route(Endpoints.LEGO, params));
+			}
+			case 'legoKits': {
+				return this.fetch<LEGOKit[]>(this.route(Endpoints.LEGOKits, params));
 			}
 			default: {
 				return this.fetch<AllCosmetics>(this.route(Endpoints.Cosmetics, params));

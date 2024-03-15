@@ -359,7 +359,13 @@ export interface LEGOCosmetic {
 	added: DateString;
 }
 
-export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego';
+export interface LEGOKit extends BaseCosmetic {
+	name: string | null;
+	images: NewCosmeticImages;
+	path: string;
+}
+
+export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego' | 'legoKits';
 
 export interface AllCosmetics {
 	br: BRCosmetic[];
@@ -367,6 +373,7 @@ export interface AllCosmetics {
 	instruments: InstrumentCosmetic[];
 	cars: CarCosmetic[];
 	lego: LEGOCosmetic[];
+	legoKits: LEGOKit[];
 }
 
 
@@ -698,6 +705,7 @@ export interface NewShopEntry extends BaseShopEntry {
 	tracks: TrackCosmetic[] | null;
 	instruments: InstrumentCosmetic[] | null;
 	cars: CarCosmetic[] | null;
+	legoKits: LEGOKit[] | null;
 }
 
 export interface NewShop {
@@ -825,7 +833,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response

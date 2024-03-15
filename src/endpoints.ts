@@ -24,6 +24,7 @@ enum Endpoints {
 	Cars = 'https://fortnite-api.com/v2/cosmetics/cars',
 	Instruments = 'https://fortnite-api.com/v2/cosmetics/instruments',
 	LEGO = 'https://fortnite-api.com/v2/cosmetics/lego',
+	LEGOKits = 'https://fortnite-api.com/v2/cosmetics/lego/kits',
 
 	CreatorCode = 'https://fortnite-api.com/v2/creatorcode',
 
