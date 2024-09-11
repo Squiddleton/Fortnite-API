@@ -381,15 +381,6 @@ export interface NewCosmeticsData {
 	items: AllCosmetics;
 }
 
-export interface NewBRCosmetics {
-	build: string;
-	previousBuild: string;
-	hash: string;
-	date: DateString;
-	lastAddition: DateString;
-	items: BRCosmetic[];
-}
-
 export type FetchCosmeticType = Exclude<CosmeticType, 'all' | 'br'> | 'new';
 
 /**
@@ -784,7 +775,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | Shop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | Shop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
