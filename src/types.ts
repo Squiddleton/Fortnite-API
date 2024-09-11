@@ -59,6 +59,7 @@ export interface CosmeticImages {
 	icon?: string;
 	featured?: string;
 	lego?: LEGOCosmeticImages;
+	bean?: NewCosmeticImages;
 	other?: StringRecord;
 }
 
@@ -366,10 +367,7 @@ export interface Bean {
 	name: string;
 	gender: string;
 	gameplayTags?: string[];
-	images: {
-		small: string;
-		large: string;
-	};
+	images: NewCosmeticImages;
 	path?: string;
 	added: DateString;
 }
