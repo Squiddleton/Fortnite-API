@@ -623,7 +623,7 @@ export interface NewDisplayAsset {
 	id: string;
 	cosmeticId?: string;
 	materialInstances: MaterialInstance[];
-	renderImages: RenderImage;
+	renderImages?: RenderImage[];
 }
 
 export interface OfferTag {
