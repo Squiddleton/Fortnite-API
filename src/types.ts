@@ -404,10 +404,6 @@ export type FetchCosmeticType = Exclude<CosmeticType, 'all' | 'br'> | 'new';
  */
 export interface CosmeticsOptions extends LanguageSupportingOption {
 	/**
-	 * Whether to only return new cosmetics
-	 */
-	new?: boolean;
-	/**
 	 * The type of cosmetics to return
 	 */
 	cosmeticType?: FetchCosmeticType;
