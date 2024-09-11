@@ -348,7 +348,7 @@ export interface InstrumentCosmetic extends BaseCosmetic {
 	showcaseVideo: string | null;
 }
 
-export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic;
+export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic | LEGOCosmetic | LEGOKit;
 
 export interface LEGOCosmetic {
 	id: string;
