@@ -12,6 +12,7 @@ enum Endpoints {
 	Cars = 'https://fortnite-api.com/v2/cosmetics/cars',
 	LEGO = 'https://fortnite-api.com/v2/cosmetics/lego',
 	LEGOKits = 'https://fortnite-api.com/v2/cosmetics/lego/kits',
+	Beans = 'https://fortnite-api.com/v2/cosmetics/beans',
 	CosmeticById = 'https://fortnite-api.com/v2/cosmetics/br/{cosmetic-id}',
 	CosmeticSearch = 'https://fortnite-api.com/v2/cosmetics/br/search',
 	CosmeticsSearchAll = 'https://fortnite-api.com/v2/cosmetics/br/search/all',

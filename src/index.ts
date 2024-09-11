@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Endpoints from './endpoints.js';
-import type { AES, AESFormat, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, CarCosmetic, ClientOptions, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewCosmeticsData, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, Stats, StringRecord, TrackCosmetic } from './types.js';
+import type { AES, AESFormat, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, Bean, CarCosmetic, ClientOptions, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewCosmeticsData, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
 export { default as Endpoints } from './endpoints.js';
@@ -120,6 +120,13 @@ export class Client {
 	 */
 	cosmetics(options: CosmeticsOptions & { cosmeticType: 'lego' }): Promise<LEGOCosmetic[]>;
 	/**
+	 * Fetches all LEGO cosmetics.
+	 *
+	 * @param options - Options for fetching cosmetics
+	 * @returns An array of LEGO cosmetics
+	 */
+	cosmetics(options: CosmeticsOptions & { cosmeticType: 'beans' }): Promise<Bean[]>;
+	/**
 	 * Fetches all cosmetics.
 	 *
 	 * @param options - Options for fetching cosmetics
@@ -146,6 +153,9 @@ export class Client {
 			}
 			case 'legoKits': {
 				return this.fetch<LEGOKit[]>(this.route(Endpoints.LEGOKits, params));
+			}
+			case 'beans': {
+				return this.fetch<Bean[]>(this.route(Endpoints.Beans, params));
 			}
 			default: {
 				return this.fetch<AllCosmetics>(this.route(Endpoints.AllCosmetics, params));

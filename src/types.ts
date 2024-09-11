@@ -360,7 +360,21 @@ export interface LEGOKit extends BaseCosmetic {
 	path: string;
 }
 
-export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego' | 'legoKits';
+export interface Bean {
+	id: string;
+	cosmeticId: string;
+	name: string;
+	gender: string;
+	gameplayTags?: string[];
+	images: {
+		small: string;
+		large: string;
+	};
+	path?: string;
+	added: DateString;
+}
+
+export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego' | 'legoKits' | 'beans';
 
 export interface AllCosmetics {
 	br: BRCosmetic[];
@@ -369,6 +383,7 @@ export interface AllCosmetics {
 	cars: CarCosmetic[];
 	lego: LEGOCosmetic[];
 	legoKits: LEGOKit[];
+	beans: Bean[];
 }
 
 
@@ -775,7 +790,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | Shop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | Bean[] | NewCosmeticsData | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | Shop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
