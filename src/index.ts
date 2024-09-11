@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
-import Endpoints from './endpoints.js';
+import { Endpoints } from './endpoints.js';
 import type { AES, AESFormat, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, Bean, CarCosmetic, ClientOptions, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewCosmeticsData, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
-export { default as Endpoints } from './endpoints.js';
+export { Endpoints } from './endpoints.js';
 
 /**
  * An error thrown when Fortnite-API responds with a non-200 status

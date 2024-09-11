@@ -1,4 +1,4 @@
-enum Endpoints {
+export enum Endpoints {
 	AES = 'https://fortnite-api.com/v2/aes',
 
 	Banners = 'https://fortnite-api.com/v1/banners',
@@ -35,5 +35,3 @@ enum Endpoints {
 	BRStats = 'https://fortnite-api.com/v2/stats/br/v2',
 	BRStatsByAccountId = 'https://fortnite-api.com/v2/stats/br/v2/{accountId}'
 }
-
-export default Endpoints;
