@@ -1,5 +1,5 @@
 import { Endpoints } from './endpoints.js';
-import type { AES, AESFormat, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, Bean, CarCosmetic, ClientOptions, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewCosmeticsData, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, Stats, StringRecord, TrackCosmetic } from './types.js';
+import type { AES, AESFormat, AllCosmetics, AllNews, AnyData, AnyEndpointOptions, AnyStatsOptions, BRCosmetic, Banner, BannerColor, BaseStatOptions, Bean, CarCosmetic, ClientOptions, CosmeticPropOptions, CosmeticSearchOptions, CosmeticsOptions, CreatorCode, FortniteMap, GameMode, Input, InstrumentCosmetic, LEGOCosmetic, LEGOKit, Language, NewCosmeticsData, News, NewsOptions, Playlist, PlaylistOptions, Raw, RawFortniteAPIError, Shop, Stats, StringRecord, TrackCosmetic } from './types.js';
 
 export * from './types.js';
 export { Endpoints } from './endpoints.js';
@@ -22,6 +22,13 @@ export class FortniteAPIError extends Error {
 		this.code = error.status;
 		this.route = route;
 	}
+}
+
+export enum ResopnseFlags {
+	None = 0,
+	IncludePaths = 1 << 0,
+	IncludeGameplayTags = 1 << 1,
+	IncludeShopHistory = 1 << 2
 }
 
 /**
@@ -53,6 +60,14 @@ export class Client {
 		const res = await fetch(route, authorization && this.key !== null ? { headers: { Authorization: this.key } } : undefined).then(r => r.json()) as Raw<Data> | RawFortniteAPIError;
 		if ('error' in res) throw new FortniteAPIError(res, route);
 		return res.data;
+	}
+	private parseFlags(options: CosmeticPropOptions) {
+		let responseFlags = ResopnseFlags.None;
+		if (options.includePaths) responseFlags |= ResopnseFlags.IncludePaths;
+		if (options.includeGameplayTags) responseFlags |= ResopnseFlags.IncludeGameplayTags;
+		if (options.includeShopHistory) responseFlags |= ResopnseFlags.IncludeShopHistory;
+
+		return responseFlags;
 	}
 
 	/**
@@ -133,7 +148,8 @@ export class Client {
 	 */
 	cosmetics(options?: CosmeticsOptions): Promise<AllCosmetics>;
 	cosmetics(options: CosmeticsOptions = {}) {
-		const params = { language: options.language ?? this.language };
+		const params = { language: options.language ?? this.language, responseFlags: this.parseFlags(options) };
+
 		switch (options.cosmeticType) {
 			case 'new': {
 				return this.fetch<NewCosmeticsData>(this.route(Endpoints.NewCosmetics, params));
@@ -266,8 +282,9 @@ export class Client {
 	 * @param language - The language for the returned data
 	 * @returns The item shop
 	 */
-	shop(language: Language = this.language) {
-		return this.fetch<Shop>(this.route(Endpoints.Shop, { language }));
+	shop(options: CosmeticPropOptions = {}) {
+		const params = { language: options.language ?? this.language, responseFlags: this.parseFlags(options) };
+		return this.fetch<Shop>(this.route(Endpoints.Shop, params));
 	}
 
 	stats(options: AnyStatsOptions & { image: Input }): Promise<Stats<true>>;

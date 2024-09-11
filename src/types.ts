@@ -378,10 +378,16 @@ export interface NewCosmeticsData {
 
 export type FetchCosmeticType = Exclude<CosmeticType, 'all'> | 'new';
 
+export interface CosmeticPropOptions extends LanguageSupportingOption {
+	includePaths?: boolean;
+	includeGameplayTags?: boolean;
+	includeShopHistory?: boolean;
+}
+
 /**
  * Options for fetching all cosmetics
  */
-export interface CosmeticsOptions extends LanguageSupportingOption {
+export interface CosmeticsOptions extends CosmeticPropOptions {
 	/**
 	 * The type of cosmetics to return
 	 */
