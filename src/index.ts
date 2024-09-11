@@ -130,7 +130,7 @@ export class Client {
 		const params = { language: options.language ?? this.language };
 		switch (options.cosmeticType) {
 			case 'new': {
-				return this.fetch<NewCosmeticsData>(this.route(Endpoints.NewAllCosmetics, params));
+				return this.fetch<NewCosmeticsData>(this.route(Endpoints.NewCosmetics, params));
 			}
 			case 'tracks': {
 				return this.fetch<TrackCosmetic[]>(this.route(Endpoints.Tracks, params));
@@ -148,7 +148,7 @@ export class Client {
 				return this.fetch<LEGOKit[]>(this.route(Endpoints.LEGOKits, params));
 			}
 			default: {
-				return this.fetch<AllCosmetics>(this.route(Endpoints.Cosmetics, params));
+				return this.fetch<AllCosmetics>(this.route(Endpoints.AllCosmetics, params));
 			}
 		}
 	}
@@ -182,8 +182,8 @@ export class Client {
 		const language = options.language ?? this.language;
 		return this.fetch<BRCosmetic>(
 			options.id === undefined
-				? this.route(Endpoints.CosmeticsSearch, { ...options, language })
-				: this.route(Endpoints.CosmeticsById.replace('{cosmetic-id}', options.id), { language })
+				? this.route(Endpoints.CosmeticSearch, { ...options, language })
+				: this.route(Endpoints.CosmeticById.replace('{cosmetic-id}', options.id), { language })
 		);
 	}
 	/**
