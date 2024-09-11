@@ -134,10 +134,10 @@ export class Client {
 	 */
 	cosmetics(options: CosmeticsOptions & { cosmeticType: 'lego' }): Promise<LEGOCosmetic[]>;
 	/**
-	 * Fetches all LEGO cosmetics.
+	 * Fetches all bean (Fall Guys) cosmetics.
 	 *
 	 * @param options - Options for fetching cosmetics
-	 * @returns An array of LEGO cosmetics
+	 * @returns An array of bean cosmetics
 	 */
 	cosmetics(options: CosmeticsOptions & { cosmeticType: 'beans' }): Promise<Bean[]>;
 	/**
@@ -279,7 +279,7 @@ export class Client {
 	/**
 	 * Fetches the current item shop.
 	 *
-	 * @param language - The language for the returned data
+	 * @param options - Options for the language and optional properties to include in the response
 	 * @returns The item shop
 	 */
 	shop(options: CosmeticPropOptions = {}) {
