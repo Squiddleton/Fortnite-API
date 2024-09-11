@@ -176,25 +176,24 @@ export interface ShopBanner {
 	backendValue: string;
 }
 
+export interface ShopLayoutMetadata {
+	key: string;
+	value: string;
+}
+
 export interface ShopLayout {
 	id: string;
 	name: string;
 	category: string;
 	index: number;
+	rank: number;
 	showIneligibleOffers: string;
-}
-
-export interface ShopSection {
-	id: string;
-	name: string;
-	index: number;
-	landingPriority: number;
-	sortOffersByOwnership: boolean;
-	showIneligibleOffers: boolean;
-	showIneligibleOffersIfGiftable: boolean;
-	showTimer: boolean;
-	enableToastNotification: boolean;
-	hidden: boolean;
+	background: string;
+	useWidePreview: boolean;
+	displayType: string;
+	textureMetadata: ShopLayoutMetadata[];
+	stringMetadata: ShopLayoutMetadata[];
+	textMetadata: ShopLayoutMetadata[];
 }
 
 export interface TrackDifficulty {
@@ -210,26 +209,6 @@ export interface Variant {
 	channel: string;
 	type?: string;
 	options: Option[];
-}
-
-export interface VoteEntry {
-	regularPrice: number;
-	finalPrice: number;
-	bundle: Bundle;
-	banner: EntryBanner;
-	giftable: boolean;
-	refundable: boolean;
-	sortPriority: number;
-	categories: string[];
-	sectionId: string;
-	session: EntrySession;
-	devName: string;
-	offerId: string;
-	displayAssetPath: string;
-	tileSize: string;
-	newDisplayAssetPath: string;
-	newDisplayAsset: NewDisplayAsset;
-	items: BRCosmetic[];
 }
 
 /**
@@ -634,49 +613,51 @@ export interface CosmeticValues {
 	backendValue: string;
 }
 
+export interface RenderImage {
+	productTag: string;
+	fileName: string;
+	image: string;
+}
+
 export interface NewDisplayAsset {
 	id: string;
 	cosmeticId?: string;
 	materialInstances: MaterialInstance[];
+	renderImages: RenderImage;
 }
 
-export interface BaseShopEntry {
+export interface OfferTag {
+	id: string;
+	text: string;
+}
+
+export interface ShopEntryColors {
+	color1: string;
+	color2: string;
+	color3: string;
+	textBackgroundColor: string;
+}
+
+export interface ShopEntry {
 	regularPrice: number;
 	finalPrice: number;
+	devName: string;
+	offerId: string;
+	inDate: DateString;
+	outDate: DateString;
 	bundle: Bundle;
 	banner: ShopBanner;
+	offerTag: OfferTag;
 	giftable: boolean;
 	refundable: boolean;
 	sortPriority: number;
-	categories: string[];
-	sectionId: string;
-	section?: ShopSection;
+	layoutId: string;
 	layout: ShopLayout;
-	devName: string;
-	offerId: string;
-	displayAssetPath: string;
+	colors: ShopEntryColors;
 	tileSize: string;
+	displayAssetPath: string;
 	newDisplayAssetPath: string;
 	newDisplayAsset: NewDisplayAsset;
-}
-
-export interface ShopEntry extends BaseShopEntry {
-	items: BRCosmetic[];
-}
-
-export interface ShopCategory {
-	name?: string;
-	entries: ShopEntry[];
-}
-
-export interface Votes {
-	name: string;
-	entries: VoteEntry[];
-}
-
-export type NewCosmetic = BRCosmetic | TrackCosmetic | InstrumentCosmetic | CarCosmetic;
-
-export interface NewShopEntry extends BaseShopEntry {
 	brItems?: BRCosmetic[];
 	tracks?: TrackCosmetic[];
 	instruments?: InstrumentCosmetic[];
@@ -688,7 +669,7 @@ export interface Shop {
 	hash: string;
 	date: DateString;
 	vbuckIcon: string;
-	entries: NewShopEntry[];
+	entries: ShopEntry[];
 }
 
 export interface BaseStats {
