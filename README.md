@@ -48,7 +48,7 @@ This project is written in TypeScript, but its distributed code is transpiled in
 
 ## Contributing
 
-While the object interfaces mirror the data's properties from [the site's dashboard](https://dash.fortnite-api.com/), the dashboard's typings lacks whether properties are optional or not.
+While the object interfaces mirror the data's properties from [the site's dashboard](https://dash.fortnite-api.com/), the documentation's typings do not state whether a property is optional.
 
 If you encounter any optional property that was not correctly documented in the typings, please raise an issue or make a pull request so that other package users will also receive correct typings. Additionally, if any data or parameters change properties and the package typings do not accurately reflect those changes, please take similar action.
 
