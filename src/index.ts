@@ -139,6 +139,9 @@ export class Client {
 			case 'new': {
 				return this.fetch<NewCosmeticsData>(this.route(Endpoints.NewCosmetics, params));
 			}
+			case 'br': {
+				return this.fetch<BRCosmetic[]>(this.route(Endpoints.BRCosmetics, params));
+			}
 			case 'tracks': {
 				return this.fetch<TrackCosmetic[]>(this.route(Endpoints.Tracks, params));
 			}
@@ -164,21 +167,12 @@ export class Client {
 	}
 
 	/**
-	 * Lists all cosmetics.
-	 *
-	 * @param options - Options for listing cosmetics
-	 * @returns An array of all cosmetics
-	 */
-	listCosmetics(language = this.language) {
-		return this.fetch<BRCosmetic[]>(this.route(Endpoints.BRCosmetics, { language }));
-	}
-	/**
 	 * Finds the first cosmetic that matches provided search parameters.
 	 *
 	 * @param options - Options for finding a cosmetic
 	 * @returns A cosmetic that matches the search parameters
 	 */
-	findCosmetic(options: CosmeticSearchOptions<'single'>) {
+	cosmeticsSearch(options: CosmeticSearchOptions<'single'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<BRCosmetic>(
 			options.id === undefined
@@ -192,7 +186,7 @@ export class Client {
 	 * @param options - Options for filtering cosmetics
 	 * @returns All cosmetics that match the search parameters
 	 */
-	filterCosmetics(options: CosmeticSearchOptions<'multiple'>) {
+	cosmeticsSearchAll(options: CosmeticSearchOptions<'multiple'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<BRCosmetic[]>(
 			options.id === undefined

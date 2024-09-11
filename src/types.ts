@@ -397,7 +397,7 @@ export interface NewCosmeticsData {
 	items: AllCosmetics;
 }
 
-export type FetchCosmeticType = Exclude<CosmeticType, 'all' | 'br'> | 'new';
+export type FetchCosmeticType = Exclude<CosmeticType, 'all'> | 'new';
 
 /**
  * Options for fetching all cosmetics
