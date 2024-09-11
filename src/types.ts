@@ -315,11 +315,6 @@ export interface BRCosmetic extends BaseCosmetic {
 	path: string;
 }
 
-/**
- * @deprecated Use BRCosmetic instead.
- */
-export type Cosmetic = BRCosmetic;
-
 export interface TrackCosmetic extends BaseCosmetic {
 	devName: string;
 	title: string;
@@ -395,33 +390,16 @@ export interface NewBRCosmetics {
 	items: BRCosmetic[];
 }
 
-/**
- * @deprecated Use NewBRCosmetics instead.
- */
-export type NewCosmetics = NewBRCosmetics;
-
-/**
- * Options for fetching all BR cosmetics
- */
-export interface AllBRCosmeticsOptions extends LanguageSupportingOption {
-	/**
-	 * Whether to only return new cosmetics
-	 */
-	new?: boolean;
-}
-
-/**
- * Options for fetching all BR cosmetics
- * @deprecated Use AllBRCosmeticsOptions instead.
- */
-export type AllCosmeticsOptions = AllBRCosmeticsOptions;
-
 export type FetchCosmeticType = Exclude<CosmeticType, 'all' | 'br'> | 'new';
 
 /**
  * Options for fetching all cosmetics
  */
-export interface CosmeticsOptions extends AllBRCosmeticsOptions {
+export interface CosmeticsOptions extends LanguageSupportingOption {
+	/**
+	 * Whether to only return new cosmetics
+	 */
+	new?: boolean;
 	/**
 	 * The type of cosmetics to return
 	 */
@@ -591,11 +569,6 @@ export interface FortniteMap {
 	pois: POI[];
 }
 
-/**
- * @deprecated Use FortniteMap instead.
- */
-export type Map = FortniteMap;
-
 export interface News {
 	hash: string;
 	date: DateString;
@@ -708,33 +681,11 @@ export interface NewShopEntry extends BaseShopEntry {
 	legoKits: LEGOKit[] | null;
 }
 
-export interface NewShop {
+export interface Shop {
 	hash: string;
 	date: DateString;
 	vbuckIcon: string;
 	entries: NewShopEntry[];
-}
-
-export interface CombinedShop {
-	hash: string;
-	date: DateString;
-	vbuckIcon: string;
-	featured: ShopCategory | null;
-	daily: ShopCategory | null;
-	votes: Votes[] | null;
-	voteWinners: Votes[] | null;
-}
-
-export interface Shop extends CombinedShop {
-	specialFeatured: ShopCategory | null;
-	specialDaily: ShopCategory | null;
-}
-
-export interface ShopOptions extends LanguageSupportingOption {
-	/**
-	 * Whether to combine the normal and special shop categories
-	 */
-	combined?: boolean;
 }
 
 export interface BaseStats {
@@ -833,7 +784,7 @@ export type AnyStatsOptions = NameStatsOptions | IdStatsOptions;
 /**
  * Any type of data that Fortnite-API can return from a 200 response
  */
-export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | NewShop | CombinedShop | Shop | Stats<boolean>;
+export type AnyData = AES | Banner[] | BannerColor[] | AllCosmetics | TrackCosmetic[] | CarCosmetic[] | InstrumentCosmetic[] | LEGOCosmetic[] | LEGOKit[] | NewCosmeticsData | NewBRCosmetics | BRCosmetic | BRCosmetic[] | CreatorCode | FortniteMap | News | AllNews | Playlist | Playlist[] | Shop | Shop | Stats<boolean>;
 
 /**
  * The data that Fortnite-API directly returns from a 200 response
@@ -846,4 +797,4 @@ export interface Raw<Data extends AnyData> {
 /**
  * Any options object used as a Client method's parameter
  */
-export type AnyEndpointOptions = AllBRCosmeticsOptions | CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | ShopOptions | BaseStatOptions | AnyStatsOptions;
+export type AnyEndpointOptions = CosmeticSearchOptions<CosmeticSearchParametersType> | NewsOptions | PlaylistOptions | BaseStatOptions | AnyStatsOptions;
