@@ -164,16 +164,6 @@ export class Client {
 	}
 
 	/**
-	 * Fetches information about a creator code.
-	 *
-	 * @param name - The creator code's name
-	 * @returns Information about the creator code
-	 */
-	creatorCode(name: string) {
-		return this.fetch<CreatorCode>(this.route(Endpoints.CreatorCode, { name }));
-	}
-
-	/**
 	 * Lists all cosmetics.
 	 *
 	 * @param options - Options for listing cosmetics
@@ -209,6 +199,16 @@ export class Client {
 				? this.route(Endpoints.CosmeticsSearchAll, { ...options, language })
 				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language }, true)
 		);
+	}
+
+	/**
+	 * Fetches information about a creator code.
+	 *
+	 * @param name - The creator code's name
+	 * @returns Information about the creator code
+	 */
+	creatorCode(name: string) {
+		return this.fetch<CreatorCode>(this.route(Endpoints.CreatorCode, { name }));
 	}
 
 	/**
@@ -273,7 +273,7 @@ export class Client {
 	 * @param language - The language for the returned data
 	 * @returns The item shop
 	 */
-	newShop(language: Language = this.language) {
+	shop(language: Language = this.language) {
 		return this.fetch<Shop>(this.route(Endpoints.Shop, { language }));
 	}
 
