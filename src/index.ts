@@ -56,8 +56,8 @@ export class Client {
 			? endpoint
 			: `${endpoint}?${Object.entries(params).map(([key, value]) => Array.isArray(value) ? value.map(v => `${key}=${v}`).join('&') : `${key}=${value}`).join('&')}`;
 	}
-	private async fetch<Data extends AnyData>(route: string, authorization = false) {
-		const res = await fetch(route, authorization && this.key !== null ? { headers: { Authorization: this.key } } : undefined).then(r => r.json()) as Raw<Data> | RawFortniteAPIError;
+	private async fetch<Data extends AnyData>(route: string, key?: string) {
+		const res = await fetch(route, key !== undefined ? { headers: { Authorization: key } } : undefined).then(r => r.json()) as Raw<Data> | RawFortniteAPIError;
 		if ('error' in res) throw new FortniteAPIError(res, route);
 		return res.data;
 	}
@@ -296,7 +296,8 @@ export class Client {
 	 * @returns The user's stats
 	 */
 	stats(options: AnyStatsOptions) {
-		if (this.key === null) throw new TypeError('Client#stats() requires an authorization key passed into the Client constructor options. You may request one at https://dash.fortnite-api.com/account');
+		const key = options.key ?? this.key;
+		if (key === null) throw new TypeError('Client#stats() requires an authorization key passed into the Client constructor options. You may request one at https://dash.fortnite-api.com/account');
 
 		const hasName = 'name' in options;
 		const hasId = 'id' in options;
@@ -315,6 +316,6 @@ export class Client {
 			route = this.route(Endpoints.BRStatsByAccountId.replace('{accountId}', options.id), params);
 		}
 
-		return this.fetch<Stats<boolean>>(route, true);
+		return this.fetch<Stats<boolean>>(route, key);
 	}
 }

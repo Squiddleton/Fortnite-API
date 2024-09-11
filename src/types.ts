@@ -745,6 +745,16 @@ export interface BaseStatOptions {
 	 * Stats#image returns null by default.
 	 */
 	image?: Input;
+	/**
+	 * An API key
+	 *
+	 * @remarks
+	 *
+	 * A key can be obtained at {@link https://dash.fortnite-api.com/account}.
+	 *
+	 * This key takes precedence over the key set when constructing the Client instance.
+	 */
+	key?: string;
 }
 
 export interface NameStatsOptions extends BaseStatOptions {
