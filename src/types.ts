@@ -421,7 +421,7 @@ export type CosmeticSearchParametersType = 'single' | 'multiple';
 /**
  * Options for finding or filtering cosmetics
  */
-export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType> extends LanguageSupportingOption {
+export interface CosmeticSearchOptions<T extends CosmeticSearchParametersType = CosmeticSearchParametersType> extends LanguageSupportingOption {
 	/**
 	 * The search parameters' language
 	 */
