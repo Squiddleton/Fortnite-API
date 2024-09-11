@@ -155,6 +155,7 @@ export interface NewCosmeticImages {
 export interface Option {
 	tag: string;
 	name?: string;
+	unlockRequirements?: string;
 	image: string;
 }
 
@@ -297,6 +298,8 @@ export interface BaseCosmetic {
 export interface BRCosmetic extends BaseCosmetic {
 	name: string;
 	description: string;
+	exclusiveDescription?: string;
+	unlockRequirements?: string;
 	customExclusiveCallout?: string;
 	type: CosmeticValues;
 	rarity: CosmeticValues;
@@ -313,7 +316,7 @@ export interface BRCosmetic extends BaseCosmetic {
 	itemPreviewHeroPath?: string;
 	displayAssetPath?: string;
 	definitionPath?: string;
-	path: string;
+	path?: string;
 }
 
 export interface TrackCosmetic extends BaseCosmetic {
@@ -340,7 +343,7 @@ export interface InstrumentCosmetic extends BaseCosmetic {
 	description: string;
 	images: NewCosmeticImages;
 	series?: CosmeticSeries;
-	path: string;
+	path?: string;
 	showcaseVideo?: string;
 }
 
@@ -351,14 +354,14 @@ export interface LEGOCosmetic {
 	cosmeticId: string;
 	soundLibraryTags?: string[];
 	images: LEGOCosmeticImages;
-	path: string;
+	path?: string;
 	added: DateString;
 }
 
 export interface LEGOKit extends BaseCosmetic {
 	name?: string ;
 	images: NewCosmeticImages;
-	path: string;
+	path?: string;
 }
 
 export interface Bean {
