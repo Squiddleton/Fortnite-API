@@ -13,10 +13,10 @@ export enum Endpoints {
 	LEGO = 'https://fortnite-api.com/v2/cosmetics/lego',
 	LEGOKits = 'https://fortnite-api.com/v2/cosmetics/lego/kits',
 	Beans = 'https://fortnite-api.com/v2/cosmetics/beans',
-	CosmeticById = 'https://fortnite-api.com/v2/cosmetics/br/{cosmetic-id}',
-	CosmeticSearch = 'https://fortnite-api.com/v2/cosmetics/br/search',
-	CosmeticsSearchAll = 'https://fortnite-api.com/v2/cosmetics/br/search/all',
-	CosmeticsSearchByIds = 'https://fortnite-api.com/v2/cosmetics/br/search/ids',
+	BRCosmeticById = 'https://fortnite-api.com/v2/cosmetics/br/{cosmetic-id}',
+	BRCosmeticSearch = 'https://fortnite-api.com/v2/cosmetics/br/search',
+	BRCosmeticsSearchAll = 'https://fortnite-api.com/v2/cosmetics/br/search/all',
+	BRCosmeticsSearchByIds = 'https://fortnite-api.com/v2/cosmetics/br/search/ids',
 
 	CreatorCode = 'https://fortnite-api.com/v2/creatorcode',
 

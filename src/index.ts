@@ -166,31 +166,31 @@ export class Client {
 	}
 
 	/**
-	 * Finds the first cosmetic that matches provided search parameters.
+	 * Finds the first BR cosmetic that matches provided search parameters.
 	 *
-	 * @param options - Options for finding a cosmetic
-	 * @returns A cosmetic that matches the search parameters
+	 * @param options - Options for finding a BR cosmetic
+	 * @returns A BR cosmetic that matches the search parameters
 	 */
-	cosmeticsSearch(options: CosmeticSearchOptions<'single'>) {
+	brCosmeticsSearch(options: CosmeticSearchOptions<'single'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<BRCosmetic>(
 			options.id === undefined
-				? this.route(Endpoints.CosmeticSearch, { ...options, language })
-				: this.route(Endpoints.CosmeticById.replace('{cosmetic-id}', options.id), { language })
+				? this.route(Endpoints.BRCosmeticSearch, { ...options, language })
+				: this.route(Endpoints.BRCosmeticById.replace('{cosmetic-id}', options.id), { language })
 		);
 	}
 	/**
-	 * Finds all cosmetics that match provided search parameters.
+	 * Finds all BR cosmetics that match provided search parameters.
 	 *
-	 * @param options - Options for filtering cosmetics
-	 * @returns All cosmetics that match the search parameters
+	 * @param options - Options for finding BR cosmetics
+	 * @returns All BR cosmetics that match the search parameters
 	 */
-	cosmeticsSearchAll(options: CosmeticSearchOptions<'multiple'>) {
+	brCosmeticsSearchAll(options: CosmeticSearchOptions<'multiple'>) {
 		const language = options.language ?? this.language;
 		return this.fetch<BRCosmetic[]>(
 			options.id === undefined
-				? this.route(Endpoints.CosmeticsSearchAll, { ...options, language })
-				: this.route(`${Endpoints.CosmeticsSearchByIds}`, { id: options.id, language }, true)
+				? this.route(Endpoints.BRCosmeticsSearchAll, { ...options, language })
+				: this.route(`${Endpoints.BRCosmeticsSearchByIds}`, { id: options.id, language }, true)
 		);
 	}
 
