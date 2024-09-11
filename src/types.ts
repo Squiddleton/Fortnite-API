@@ -323,7 +323,7 @@ export interface TrackCosmetic extends BaseCosmetic {
 	devName: string;
 	title: string;
 	artist: string;
-	album: null;
+	album?: string;
 	releaseYear: number;
 	bpm: number;
 	duration: number;
