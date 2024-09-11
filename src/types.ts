@@ -113,7 +113,7 @@ export interface EpicAccount {
 }
 
 export interface LEGOCosmeticImages extends NewCosmeticImages {
-	wide?: string ;
+	wide?: string;
 }
 
 export interface MapImages {
@@ -266,7 +266,7 @@ export interface RawFortniteAPIError {
 
 export interface AES {
 	build: string;
-	mainKey?: string ;
+	mainKey?: string;
 	dynamicKeys: DynamicKey[];
 	updated: DateString;
 }
@@ -276,7 +276,7 @@ export interface Banner {
 	devName: string;
 	name: string;
 	description: string;
-	category?: string ;
+	category?: string;
 	fullUsageRights: boolean;
 	images: BannerImages;
 }
@@ -332,22 +332,20 @@ export interface TrackCosmetic extends BaseCosmetic {
 	albumArt: string;
 }
 
-export interface CarCosmetic extends InstrumentCosmetic {
-	vehicleId: string;
-}
-
 export interface InstrumentCosmetic extends BaseCosmetic {
-	type: CosmeticValues;
-	rarity: CosmeticValues;
 	name: string;
 	description: string;
+	type: CosmeticValues;
+	rarity: CosmeticValues;
 	images: NewCosmeticImages;
 	series?: CosmeticSeries;
 	path?: string;
 	showcaseVideo?: string;
 }
 
-export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic | LEGOCosmetic | LEGOKit;
+export interface CarCosmetic extends InstrumentCosmetic {
+	vehicleId: string;
+}
 
 export interface LEGOCosmetic {
 	id: string;
@@ -359,7 +357,7 @@ export interface LEGOCosmetic {
 }
 
 export interface LEGOKit extends BaseCosmetic {
-	name?: string ;
+	name?: string;
 	images: NewCosmeticImages;
 	path?: string;
 }
@@ -374,6 +372,8 @@ export interface Bean {
 	path?: string;
 	added: DateString;
 }
+
+export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic | LEGOCosmetic | LEGOKit;
 
 export type CosmeticType = 'all' | 'br' | 'tracks' | 'instruments' | 'cars' | 'lego' | 'legoKits' | 'beans';
 
