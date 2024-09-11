@@ -30,7 +30,7 @@ export type StringRecord = {
 /**
  * All supported languages for many endpoints
  */
-export type Language = 'ar' | 'de' | 'en' | 'es' | 'es-419' | 'fr' | 'it' | 'ja' | 'ko' | 'pl' | 'pt-BR' | 'ru' | 'tr' | 'zh-CN' | 'zh-Hant';
+export type Language = 'ar' | 'de' | 'en' | 'es' | 'es-419' | 'fr' | 'it' | 'ja' | 'ko' | 'pl' | 'pt-BR' | 'ru' | 'tr' | 'zh-Hans' | 'zh-Hant';
 
 export interface BannerImages {
 	smallIcon: string;
