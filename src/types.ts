@@ -55,11 +55,11 @@ export interface Coordinates {
 }
 
 export interface CosmeticImages {
-	smallIcon: string | null;
-	icon: string | null;
-	featured: string | null;
-	lego: LEGOCosmeticImages | null;
-	other: StringRecord | null;
+	smallIcon?: string;
+	icon?: string;
+	featured?: string;
+	lego?: LEGOCosmeticImages;
+	other?: StringRecord;
 }
 
 export interface CosmeticIntroduction {
@@ -71,7 +71,7 @@ export interface CosmeticIntroduction {
 
 export interface CosmeticSeries {
 	value: string;
-	image: string | null;
+	image?: string;
 	colors: string[];
 	backendValue: string;
 }
@@ -112,7 +112,7 @@ export interface EpicAccount {
 }
 
 export interface LEGOCosmeticImages extends NewCosmeticImages {
-	wide: string | null;
+	wide?: string ;
 }
 
 export interface MapImages {
@@ -124,15 +124,15 @@ export interface MaterialInstance {
 	id: string;
 	images: StringRecord;
 	colors: StringRecord;
-	scalings: Record<string, number> | null;
-	flags: Record<string, boolean> | null;
+	scalings?: Record<string, number>;
+	flags?: Record<string, boolean>;
 }
 
 export interface Message {
 	title: string;
 	body: string;
 	image: string;
-	adspace: string;
+	adspace?: string;
 }
 
 export interface MOTD {
@@ -153,13 +153,13 @@ export interface NewCosmeticImages {
 
 export interface Option {
 	tag: string;
-	name: string | null;
+	name?: string;
 	image: string;
 }
 
 export interface PlaylistImages {
-	showcase: string | null;
-	missionIcon: string | null;
+	showcase?: string;
+	missionIcon?: string;
 }
 
 export interface POI {
@@ -206,7 +206,7 @@ export interface TrackDifficulty {
 
 export interface Variant {
 	channel: string;
-	type: string | null;
+	type?: string;
 	options: Option[];
 }
 
@@ -264,7 +264,7 @@ export interface RawFortniteAPIError {
 
 export interface AES {
 	build: string;
-	mainKey: string | null;
+	mainKey?: string ;
 	dynamicKeys: DynamicKey[];
 	updated: DateString;
 }
@@ -274,7 +274,7 @@ export interface Banner {
 	devName: string;
 	name: string;
 	description: string;
-	category: string | null;
+	category?: string ;
 	fullUsageRights: boolean;
 	images: BannerImages;
 }
@@ -288,9 +288,9 @@ export interface BannerColor {
 
 export interface BaseCosmetic {
 	id: string;
-	gameplayTags: string[] | null;
+	gameplayTags?: string[];
 	added: DateString;
-	shopHistory: DateString[] | null;
+	shopHistory?: DateString[];
 }
 
 export interface BRCosmetic extends BaseCosmetic {
@@ -299,19 +299,19 @@ export interface BRCosmetic extends BaseCosmetic {
 	customExclusiveCallout?: string;
 	type: CosmeticValues;
 	rarity: CosmeticValues;
-	series: CosmeticSeries | null;
-	set: CosmeticSet | null;
-	introduction: CosmeticIntroduction | null;
+	series?: CosmeticSeries;
+	set?: CosmeticSet;
+	introduction?: CosmeticIntroduction;
 	images: CosmeticImages;
-	variants: Variant[] | null;
+	variants?: Variant[];
 	builtInEmoteIds?: string[];
-	searchTags: string[] | null;
-	metaTags: string[] | null;
-	showcaseVideo: string | null;
-	dynamicPakId: string | null;
+	searchTags?: string[];
+	metaTags?: string[];
+	showcaseVideo?: string;
+	dynamicPakId?: string;
 	itemPreviewHeroPath?: string;
-	displayAssetPath: string | null;
-	definitionPath: string | null;
+	displayAssetPath?: string;
+	definitionPath?: string;
 	path: string;
 }
 
@@ -324,7 +324,7 @@ export interface TrackCosmetic extends BaseCosmetic {
 	bpm: number;
 	duration: number;
 	difficulty: TrackDifficulty;
-	genres: string[] | null;
+	genres?: string[];
 	albumArt: string;
 }
 
@@ -338,9 +338,9 @@ export interface InstrumentCosmetic extends BaseCosmetic {
 	name: string;
 	description: string;
 	images: NewCosmeticImages;
-	series: CosmeticSeries | null;
+	series?: CosmeticSeries;
 	path: string;
-	showcaseVideo: string | null;
+	showcaseVideo?: string;
 }
 
 export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentCosmetic | LEGOCosmetic | LEGOKit;
@@ -348,14 +348,14 @@ export type AnyCosmetic = BRCosmetic | TrackCosmetic | CarCosmetic | InstrumentC
 export interface LEGOCosmetic {
 	id: string;
 	cosmeticId: string;
-	soundLibraryTags: string[] | null;
+	soundLibraryTags?: string[];
 	images: LEGOCosmeticImages;
 	path: string;
 	added: DateString;
 }
 
 export interface LEGOKit extends BaseCosmetic {
-	name: string | null;
+	name?: string ;
 	images: NewCosmeticImages;
 	path: string;
 }
@@ -578,15 +578,15 @@ export interface FortniteMap {
 export interface News {
 	hash: string;
 	date: DateString;
-	image: string | null;
-	motds: MOTD[] | null;
-	messages: Message[] | null;
+	image?: string;
+	motds?: MOTD[];
+	messages?: Message[];
 }
 
 export interface AllNews {
-	br: News | null;
-	stw: News | null;
-	creative: News | null;
+	br?: News;
+	stw?: News;
+	creative?: News;
 }
 
 export interface NewsOptions extends LanguageSupportingOption {
@@ -602,11 +602,11 @@ export interface NewsOptions extends LanguageSupportingOption {
 
 export interface Playlist {
 	id: string;
-	name: string | null;
-	subName: string | null;
-	description: string | null;
-	gameType: string | null;
-	ratingType: string | null;
+	name?: string;
+	subName?: string;
+	description?: string;
+	gameType?: string;
+	ratingType?: string;
 	minPlayers: number;
 	maxPlayers: number;
 	maxTeams: number;
@@ -639,7 +639,7 @@ export interface CosmeticValues {
 
 export interface NewDisplayAsset {
 	id: string;
-	cosmeticId: string | null;
+	cosmeticId?: string;
 	materialInstances: MaterialInstance[];
 }
 
@@ -653,7 +653,7 @@ export interface BaseShopEntry {
 	sortPriority: number;
 	categories: string[];
 	sectionId: string;
-	section: ShopSection | null;
+	section?: ShopSection;
 	layout: ShopLayout;
 	devName: string;
 	offerId: string;
@@ -668,7 +668,7 @@ export interface ShopEntry extends BaseShopEntry {
 }
 
 export interface ShopCategory {
-	name: string | null;
+	name?: string;
 	entries: ShopEntry[];
 }
 
@@ -680,11 +680,11 @@ export interface Votes {
 export type NewCosmetic = BRCosmetic | TrackCosmetic | InstrumentCosmetic | CarCosmetic;
 
 export interface NewShopEntry extends BaseShopEntry {
-	brItems: BRCosmetic[] | null;
-	tracks: TrackCosmetic[] | null;
-	instruments: InstrumentCosmetic[] | null;
-	cars: CarCosmetic[] | null;
-	legoKits: LEGOKit[] | null;
+	brItems?: BRCosmetic[];
+	tracks?: TrackCosmetic[];
+	instruments?: InstrumentCosmetic[];
+	cars?: CarCosmetic[];
+	legoKits?: LEGOKit[];
 }
 
 export interface Shop {
