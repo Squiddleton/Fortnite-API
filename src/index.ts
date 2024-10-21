@@ -24,7 +24,7 @@ export class FortniteAPIError extends Error {
 	}
 }
 
-export enum ResopnseFlags {
+export enum ResponseFlags {
 	None = 0,
 	IncludePaths = 1 << 0,
 	IncludeGameplayTags = 1 << 1,
@@ -62,10 +62,10 @@ export class Client {
 		return res.data;
 	}
 	private parseFlags(options: CosmeticPropOptions) {
-		let responseFlags = ResopnseFlags.None;
-		if (options.includePaths) responseFlags |= ResopnseFlags.IncludePaths;
-		if (options.includeGameplayTags) responseFlags |= ResopnseFlags.IncludeGameplayTags;
-		if (options.includeShopHistory) responseFlags |= ResopnseFlags.IncludeShopHistory;
+		let responseFlags = ResponseFlags.None;
+		if (options.includePaths) responseFlags |= ResponseFlags.IncludePaths;
+		if (options.includeGameplayTags) responseFlags |= ResponseFlags.IncludeGameplayTags;
+		if (options.includeShopHistory) responseFlags |= ResponseFlags.IncludeShopHistory;
 
 		return responseFlags;
 	}
